@@ -23,7 +23,7 @@ from liquid import Environment, FileSystemLoader
 from markupsafe import Markup
 
 ROOT = Path(__file__).resolve().parent.parent
-THEME = ROOT / "theme"
+THEME = Path(os.environ.get("SS_THEME_DIR") or (ROOT / "theme"))
 PREVIEW = ROOT / "preview"
 PRODUCT_HANDLE = (
     "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-"

@@ -1,7 +1,7 @@
 {
   "sections": {
     "hero": {
-      "type": "ss-home-hero",
+      "type": "ss-home-portada",
       "settings": {
         "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
       },
@@ -35,7 +35,7 @@
       ]
     },
     "trust": {
-      "type": "ss-home-trust",
+      "type": "ss-home-franja",
       "blocks": {
         "item_1": {
           "type": "item",
@@ -74,7 +74,7 @@
       ]
     },
     "benefits": {
-      "type": "ss-home-benefits",
+      "type": "ss-home-beneficios",
       "blocks": {
         "benefit_1": {
           "type": "benefit",
@@ -117,7 +117,7 @@
       ]
     },
     "how": {
-      "type": "ss-home-how",
+      "type": "ss-home-como-funciona",
       "blocks": {
         "step_1": {
           "type": "step",
@@ -157,7 +157,7 @@
       ]
     },
     "result": {
-      "type": "ss-home-result",
+      "type": "ss-home-resultado",
       "blocks": {
         "limit_1": {
           "type": "limit",
@@ -191,13 +191,13 @@
       ]
     },
     "lifestyle": {
-      "type": "ss-home-lifestyle",
+      "type": "ss-home-contexto",
       "settings": {
         "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
       }
     },
     "compare": {
-      "type": "ss-compare",
+      "type": "ss-comparativa",
       "settings": {
         "eyebrow": "Frente a otras opciones",
         "title": "Pegatinas detectoras frente a tiras reactivas",
@@ -287,7 +287,7 @@
       ]
     },
     "product": {
-      "type": "ss-home-product",
+      "type": "ss-home-producto",
       "settings": {
         "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
       },
@@ -355,7 +355,7 @@
       ]
     },
     "faq": {
-      "type": "ss-faq",
+      "type": "ss-preguntas",
       "settings": {
         "eyebrow": "Antes de comprar",
         "title": "Preguntas frecuentes"
@@ -432,7 +432,7 @@
       ]
     },
     "service": {
-      "type": "ss-home-service",
+      "type": "ss-home-confianza",
       "blocks": {
         "card_1": {
           "type": "card",
@@ -481,13 +481,13 @@
       ]
     },
     "final": {
-      "type": "ss-home-final",
+      "type": "ss-home-cta-final",
       "settings": {
         "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
       }
     },
     "sticky": {
-      "type": "ss-home-sticky",
+      "type": "ss-home-cta-movil",
       "settings": {
         "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
       }

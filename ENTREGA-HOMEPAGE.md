@@ -20,18 +20,18 @@ Implementación real de la homepage sobre el tema exportado de la tienda
 
 | # | Sección | Archivo | Función comercial |
 |---|---------|---------|-------------------|
-| 1 | Hero | `sections/ss-home-hero.liquid` | Qué es, para qué sirve, precio real y CTA a la compra |
-| 2 | Franja de confianza | `sections/ss-home-trust.liquid` | Envío, plazos, devoluciones y pago, en una línea |
-| 3 | Beneficios | `sections/ss-home-benefits.liquid` | Discreción, rapidez, formato y un solo uso |
-| 4 | Cómo funciona | `sections/ss-home-how.liquid` | 3 pasos con imagen + aviso de uso |
-| 5 | Resultado y límites | `sections/ss-home-result.liquid` | Comparador blanco/azul y advertencias reales |
-| 6 | Contexto | `sections/ss-home-lifestyle.liquid` | Momento de uso (salir, festival, bar) |
-| 7 | Comparativa | `sections/ss-compare.liquid` (reutilizada) | Pegatinas frente a tiras reactivas |
-| 8 | Producto | `sections/ss-home-product.liquid` | Precio dinámico, packs y contenido del pedido |
-| 9 | FAQ | `sections/ss-faq.liquid` (reutilizada) | Objeciones: uso, sustancias, bebidas, envíos, devoluciones |
-| 10 | Confianza de tienda | `sections/ss-home-service.liquid` | Envío, devolución, soporte y checkout |
-| 11 | CTA fijo móvil | `sections/ss-home-sticky.liquid` | Compra a mano en móvil, se oculta en el pie |
-| 12 | CTA final | `sections/ss-home-final.liquid` | Cierre del recorrido |
+| 1 | Hero | `sections/ss-home-portada.liquid` | Qué es, para qué sirve, precio real y CTA a la compra |
+| 2 | Franja de confianza | `sections/ss-home-franja.liquid` | Envío, plazos, devoluciones y pago, en una línea |
+| 3 | Beneficios | `sections/ss-home-beneficios.liquid` | Discreción, rapidez, formato y un solo uso |
+| 4 | Cómo funciona | `sections/ss-home-como-funciona.liquid` | 3 pasos con imagen + aviso de uso |
+| 5 | Resultado y límites | `sections/ss-home-resultado.liquid` | Comparador blanco/azul y advertencias reales |
+| 6 | Contexto | `sections/ss-home-contexto.liquid` | Momento de uso (salir, festival, bar) |
+| 7 | Comparativa | `sections/ss-comparativa.liquid` (reutilizada) | Pegatinas frente a tiras reactivas |
+| 8 | Producto | `sections/ss-home-producto.liquid` | Precio dinámico, packs y contenido del pedido |
+| 9 | FAQ | `sections/ss-preguntas.liquid` (reutilizada) | Objeciones: uso, sustancias, bebidas, envíos, devoluciones |
+| 10 | Confianza de tienda | `sections/ss-home-confianza.liquid` | Envío, devolución, soporte y checkout |
+| 11 | CTA fijo móvil | `sections/ss-home-cta-movil.liquid` | Compra a mano en móvil, se oculta en el pie |
+| 12 | CTA final | `sections/ss-home-cta-final.liquid` | Cierre del recorrido |
 
 Todas las secciones tienen `presets`, ajustes en español y bloques editables
 desde el editor visual (textos, iconos, imágenes, enlaces, orden de bloques).
@@ -42,18 +42,18 @@ desde el editor visual (textos, iconos, imágenes, enlaces, orden de bloques).
 |---|---|
 | 1. Barra de anuncio | Barra nativa del tema, con los colores de marca y la oferta real |
 | 2. Cabecera | Cabecera nativa de Horizon (logo, menú, buscador, cuenta, carrito) |
-| 3. Hero | `ss-home-hero` |
-| 4. Beneficios | `ss-home-benefits` |
-| 5. Cómo funciona (3 pasos) | `ss-home-how` |
-| 6. Resultados y límites | `ss-home-result` (comparador + límites) |
-| 7. Lifestyle / emocional | `ss-home-lifestyle` |
-| 8. Producto destacado + compra | `ss-home-product` (precio dinámico, packs, CTA) |
-| 9. Comparativa | `ss-compare` |
-| 10. Qué incluye el pedido | Bloques de `ss-home-product` |
-| 11. Prueba social | `ss-home-trust` + `ss-home-service` (datos verificables de la tienda) |
-| 12. Confianza | `ss-home-trust` y `ss-home-service` |
-| 13. FAQ en acordeón | `ss-faq` |
-| 14. CTA final | `ss-home-final` (+ barra fija móvil `ss-home-sticky`) |
+| 3. Hero | `ss-home-portada` |
+| 4. Beneficios | `ss-home-beneficios` |
+| 5. Cómo funciona (3 pasos) | `ss-home-como-funciona` |
+| 6. Resultados y límites | `ss-home-resultado` (comparador + límites) |
+| 7. Lifestyle / emocional | `ss-home-contexto` |
+| 8. Producto destacado + compra | `ss-home-producto` (precio dinámico, packs, CTA) |
+| 9. Comparativa | `ss-comparativa` |
+| 10. Qué incluye el pedido | Bloques de `ss-home-producto` |
+| 11. Prueba social | `ss-home-franja` + `ss-home-confianza` (datos verificables de la tienda) |
+| 12. Confianza | `ss-home-franja` y `ss-home-confianza` |
+| 13. FAQ en acordeón | `ss-preguntas` |
+| 14. CTA final | `ss-home-cta-final` (+ barra fija móvil `ss-home-cta-movil`) |
 | 15. Pie | Pie nativo del tema, con copy y colores ajustados |
 
 ### Archivos nuevos
@@ -75,8 +75,8 @@ layout/theme.liquid          Carga ss-pdp.css/js y las fuentes también en el in
                              añade ss-home.css/js y la clase de body ss-home-page.
 assets/ss-pdp.css            Estilos del carrito y del drawer aplicados también en la
                              homepage (misma identidad en el flujo de compra).
-sections/ss-faq.liquid       Ajuste "Ancla de la sección" (por defecto "preguntas").
-sections/ss-compare.liquid   Textos por defecto sin marca ajena.
+sections/ss-preguntas.liquid       Ajuste "Ancla de la sección" (por defecto "preguntas").
+sections/ss-comparativa.liquid   Textos por defecto sin marca ajena.
 sections/ss-brand-footer.liquid  Marca por defecto del pie de la PDP.
 templates/product.ss-pdp.json    Sustituidas 3 menciones a "SippSister" por MiniRueda.
 sections/ss-home-redirect.liquid Eliminado: la portada ya no redirige a la PDP.
