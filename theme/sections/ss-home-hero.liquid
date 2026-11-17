@@ -1,0 +1,316 @@
+{%- comment -%}
+  SS · Home — Hero principal
+  ----------------------------------------------------------------------------
+  Titular, subtítulo, CTA dinámico al producto real, imagen del pack y una
+  pequeña comparativa visual (blanca / azul) como apoyo, no como promesa.
+{%- endcomment -%}
+
+{%- liquid
+  assign ss_product = section.settings.product
+  if ss_product == blank
+    assign ss_product = all_products['drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10']
+  endif
+  assign ss_cta_url = section.settings.cta_link
+  if ss_cta_url == blank
+    assign ss_cta_url = ss_product.url | default: '/collections/all'
+  endif
+  assign ss_secondary_url = section.settings.secondary_link | default: '#como-funciona'
+  assign ss_price_markup = ''
+  if ss_product != blank and section.settings.show_price
+    assign ss_price_markup = ss_product.price | money | prepend: ' · '
+  endif
+-%}
+
+<div class="ss-pdp ss-home ss-h-hero">
+  <div class="ss-wrap">
+    <div class="ss-h-hero__grid">
+      <div class="ss-h-hero__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ss-h-hero__pill">
+            <i aria-hidden="true"></i>
+            {{ section.settings.eyebrow }}
+          </p>
+        {%- endif -%}
+
+        <h1 id="ss-hero-title">
+          {{ section.settings.title }}
+          {%- if section.settings.title_accent != blank %}
+            <span class="ss-serif">{{ section.settings.title_accent }}</span>
+          {%- endif -%}
+        </h1>
+
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ss-h-hero__sub">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+
+        <div class="ss-h-hero__actions">
+          <a class="ss-h-btn" href="{{ ss_cta_url }}"><span>{{ section.settings.cta_label }}{{ ss_price_markup }}</span>{% render 'ss-icon', name: 'bag', size: 17, stroke: 2 %}</a>
+          {%- if section.settings.secondary_label != blank -%}
+            <a class="ss-h-link" href="{{ ss_secondary_url }}">
+              {{ section.settings.secondary_label }}
+              {% render 'ss-icon', name: 'arrow-down', size: 15, stroke: 2.4 %}
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="ss-h-hero__list">
+            {%- for block in section.blocks -%}
+              {%- if block.type != 'bullet' -%}{%- continue -%}{%- endif -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="ss-h-ico">
+                  {% render 'ss-icon', name: block.settings.icon, size: 13, stroke: 2.2 %}
+                </span>
+                {{ block.settings.text }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.note != blank -%}
+          <p class="ss-h-hero__note">{% render 'ss-icon', name: 'truck', size: 15, stroke: 2 %}{{ section.settings.note }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="ss-h-hero__media">
+        <div class="ss-h-hero__frame">
+          {%- if section.settings.badge != blank -%}
+            <span class="ss-h-hero__badge">{{ section.settings.badge }}</span>
+          {%- endif -%}
+          {% render 'ss-image',
+            image: section.settings.image,
+            asset: 'pdp-ss-hero-pack.jpg',
+            alt: section.settings.image_alt,
+            sizes: '(min-width: 990px) 46vw, 100vw',
+            loading: 'eager',
+            fetchpriority: 'high',
+            width: 1200,
+            height: 1200
+          %}
+        </div>
+
+        <div class="ss-h-hero__compare">
+          <figure>
+            {% render 'ss-image',
+              image: section.settings.image_before,
+              asset: 'pdp-ss-before-nail.jpg',
+              alt: section.settings.alt_before,
+              sizes: '132px',
+              loading: 'lazy',
+              width: 400,
+              height: 400
+            %}
+            <figcaption>
+              <b>{{ section.settings.label_before }}</b>
+              {{ section.settings.caption_before }}
+            </figcaption>
+          </figure>
+          <figure>
+            {% render 'ss-image',
+              image: section.settings.image_after,
+              asset: 'pdp-ss-after-nail.jpg',
+              alt: section.settings.alt_after,
+              sizes: '132px',
+              loading: 'lazy',
+              width: 400,
+              height: 400
+            %}
+            <figcaption>
+              <b>{{ section.settings.label_after }}</b>
+              {{ section.settings.caption_after }}
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Inicio · Hero",
+  "tag": "section",
+  "class": "ss-home-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Textos"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "Pegatinas detectoras · GHB y ketamina"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titular",
+      "default": "Un pequeño gesto"
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Titular (parte destacada en cursiva)",
+      "default": "antes de brindar."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Pegatinas que parecen nail art y te permiten comprobar tu bebida. Se llevan puestas en la uña: tocas una gota y, en unos 10 segundos, ves si cambian de color."
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Etiqueta sobre la imagen",
+      "default": "10 comprobaciones por pack"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Nota bajo el botón",
+      "default": "Envío gratis en 2+ packs · Devoluciones en 14 días"
+    },
+    {
+      "type": "header",
+      "content": "Botones"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del botón principal",
+      "default": "Elegir mi pack"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Enlace del botón principal",
+      "info": "Si se deja vacío, se usa la página del producto seleccionado."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Mostrar el precio del producto en el botón",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Texto del enlace secundario",
+      "default": "Ver cómo funciona"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Enlace secundario"
+    },
+    {
+      "type": "header",
+      "content": "Producto"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto",
+      "info": "Se usa para el precio y el enlace del botón."
+    },
+    {
+      "type": "header",
+      "content": "Imágenes"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen principal",
+      "info": "Si se deja vacía se usa la imagen incluida en el tema."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Texto alternativo de la imagen principal",
+      "default": "Sobre rosa y lámina de pegatinas detectoras para bebidas"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_before",
+      "label": "Miniatura: pegatina blanca"
+    },
+    {
+      "type": "text",
+      "id": "alt_before",
+      "label": "Texto alternativo (blanca)",
+      "default": "Pegatina blanca sobre una uña antes de la comprobación"
+    },
+    {
+      "type": "text",
+      "id": "label_before",
+      "label": "Etiqueta (blanca)",
+      "default": "Blanca"
+    },
+    {
+      "type": "text",
+      "id": "caption_before",
+      "label": "Pie (blanca)",
+      "default": "Sin cambio de color"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_after",
+      "label": "Miniatura: pegatina azul"
+    },
+    {
+      "type": "text",
+      "id": "alt_after",
+      "label": "Texto alternativo (azul)",
+      "default": "Pegatina azul sobre una uña tras el contacto con la bebida"
+    },
+    {
+      "type": "text",
+      "id": "label_after",
+      "label": "Etiqueta (azul)",
+      "default": "Azul"
+    },
+    {
+      "type": "text",
+      "id": "caption_after",
+      "label": "Pie (azul)",
+      "default": "Alerta: no bebas"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Ventaja breve",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "heart", "label": "Corazón" },
+            { "value": "clock", "label": "Reloj" },
+            { "value": "tote", "label": "Bolso" },
+            { "value": "shield-check", "label": "Escudo" },
+            { "value": "box", "label": "Caja" },
+            { "value": "sparkles", "label": "Estrellas" }
+          ],
+          "default": "heart"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Parecen nail art, no un test"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inicio · Hero"
+    }
+  ]
+}
+{% endschema %}

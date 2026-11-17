@@ -1,0 +1,54 @@
+{%- comment -%} SS · PDP — Preguntas frecuentes (banda diagonal) {%- endcomment -%}
+
+<div class="ss-pdp ss-faq-band"{% if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id }}"{% endif %}>
+  <div class="ss-wrap">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ss-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <h2 class="ss-section-title">{{ section.settings.title }}</h2>
+
+    <div class="ss-faq-list">
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'faq' -%}{%- continue -%}{%- endif -%}
+        <div class="ss-faq-item" data-ss-acc {{ block.shopify_attributes }}>
+          <button type="button" class="ss-faq-btn" data-ss-acc-btn aria-expanded="false">
+            {{ block.settings.question }}
+            {% render 'ss-icon', name: 'chevron', size: 17, stroke: 2.2, class: 'ss-chev', color: '#F6C8D4' %}
+          </button>
+          <div class="ss-faq-body" data-ss-acc-body>
+            <div class="ss-faq-body-inner">
+              {{ block.settings.answer }}
+              {%- if block.settings.safety_note != blank -%}
+                <div class="ss-safety-box">{{ block.settings.safety_note }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · FAQ",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Resolvemos tus dudas" },
+    { "type": "text", "id": "anchor_id", "label": "Ancla de la sección", "info": "Permite enlazar directamente a la FAQ desde el menú o los botones.", "default": "preguntas" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Preguntas frecuentes" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pregunta" },
+        { "type": "richtext", "id": "answer", "label": "Respuesta" },
+        { "type": "richtext", "id": "safety_note", "label": "Aviso destacado (opcional)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SS · FAQ" }]
+}
+{% endschema %}

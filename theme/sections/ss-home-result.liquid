@@ -1,0 +1,298 @@
+{%- comment -%}
+  SS · Home — Lectura del resultado y límites
+  Reutiliza el comparador antes/después de la PDP (mismo CSS y mismo JS) y
+  añade las advertencias de uso para no prometer seguridad.
+{%- endcomment -%}
+
+<div class="ss-pdp ss-home ss-h-result" id="resultado">
+  <div class="ss-wrap">
+    <div class="ss-h-head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ss-h-kicker">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="ss-h-title">
+        {{ section.settings.title }}
+        {%- if section.settings.title_accent != blank %}
+          <span class="ss-serif">{{ section.settings.title_accent }}</span>
+        {%- endif -%}
+      </h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p>{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ss-h-result__grid">
+      <div class="ss-h-result__slider">
+        <div
+          class="ss-slider"
+          data-ss-slider
+          tabindex="0"
+          role="slider"
+          aria-label="{{ section.settings.slider_aria | escape }}"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+        >
+          {% render 'ss-image',
+            image: section.settings.image_before,
+            asset: 'pdp-ss-before-nail.jpg',
+            alt: section.settings.alt_before,
+            sizes: '(min-width: 990px) 430px, 100vw',
+            loading: 'lazy',
+            width: 1200,
+            height: 1200
+          %}
+          {%- if section.settings.image_after != blank -%}
+            <img
+              class="ss-after"
+              data-ss-slider-after
+              src="{{ section.settings.image_after | image_url: width: 1200 }}"
+              alt="{{ section.settings.alt_after | escape }}"
+              loading="lazy"
+              width="1200"
+              height="1200"
+            >
+          {%- else -%}
+            <img
+              class="ss-after"
+              data-ss-slider-after
+              src="{{ 'pdp-ss-after-nail.jpg' | asset_url }}"
+              alt="{{ section.settings.alt_after | escape }}"
+              loading="lazy"
+              width="1200"
+              height="1200"
+            >
+          {%- endif -%}
+          <span class="ss-slider-tag ss-left">{{ section.settings.tag_before }}</span>
+          <span class="ss-slider-tag ss-right">{{ section.settings.tag_after }}</span>
+          <div class="ss-slider-handle" data-ss-slider-handle>
+            <div class="ss-slider-knob">
+              {% render 'ss-icon', name: 'arrows', size: 22, stroke: 2.4 %}
+            </div>
+          </div>
+        </div>
+        <p class="ss-slider-legend">
+          <b>{{ section.settings.legend_before }}</b><br>
+          {{ section.settings.legend_after }}
+        </p>
+      </div>
+
+      <div class="ss-h-result__side">
+        <div class="ss-h-legend">
+          <div class="ss-h-legend__item">
+            <span class="ss-h-legend__chip" aria-hidden="true"></span>
+            <div>
+              <b>{{ section.settings.state_white_title }}</b>
+              <span>{{ section.settings.state_white_text }}</span>
+            </div>
+          </div>
+          <div class="ss-h-legend__item">
+            <span class="ss-h-legend__chip ss-h-legend__chip--blue" aria-hidden="true"></span>
+            <div>
+              <b>{{ section.settings.state_blue_title }}</b>
+              <span>{{ section.settings.state_blue_text }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ss-h-limits">
+          <h3>{{ section.settings.limits_title }}</h3>
+          <ul class="ss-h-limits__list">
+            {%- for block in section.blocks -%}
+              {%- if block.type != 'limit' -%}{%- continue -%}{%- endif -%}
+              <li {{ block.shopify_attributes }}>
+                {% render 'ss-icon', name: block.settings.icon, size: 17, stroke: 1.9 %}
+                <div>
+                  <b>{{ block.settings.title }}</b>
+                  <span>{{ block.settings.text }}</span>
+                </div>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        {%- if section.settings.cta_label != blank -%}
+          <p class="ss-h-result__cta">
+            <a class="ss-h-link" href="{{ section.settings.cta_link | default: '#preguntas' }}">
+              {{ section.settings.cta_label }}
+              {% render 'ss-icon', name: 'arrow-down', size: 14, stroke: 2.4 %}
+            </a>
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Inicio · Resultado",
+  "tag": "section",
+  "class": "ss-home-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "Lectura del resultado"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Qué significa"
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Parte destacada en cursiva",
+      "default": "el color."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Descripción",
+      "default": "Desliza la imagen para comparar una pegatina sin contacto y otra tras el contacto con la bebida."
+    },
+    {
+      "type": "header",
+      "content": "Comparador"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_before",
+      "label": "Imagen: pegatina blanca"
+    },
+    {
+      "type": "text",
+      "id": "alt_before",
+      "label": "Texto alternativo (blanca)",
+      "default": "Uña con pegatina blanca antes de la comprobación"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_after",
+      "label": "Imagen: pegatina azul"
+    },
+    {
+      "type": "text",
+      "id": "alt_after",
+      "label": "Texto alternativo (azul)",
+      "default": "Uña con pegatina azul tras el contacto con la bebida"
+    },
+    {
+      "type": "text",
+      "id": "tag_before",
+      "label": "Etiqueta (blanca)",
+      "default": "Antes · blanca"
+    },
+    {
+      "type": "text",
+      "id": "tag_after",
+      "label": "Etiqueta (azul)",
+      "default": "Después · azul"
+    },
+    {
+      "type": "text",
+      "id": "legend_before",
+      "label": "Leyenda (blanca)",
+      "default": "Blanca: no se aprecia cambio de color."
+    },
+    {
+      "type": "text",
+      "id": "legend_after",
+      "label": "Leyenda (azul)",
+      "default": "Azul: posible presencia de GHB o ketamina. No consumas la bebida."
+    },
+    {
+      "type": "text",
+      "id": "slider_aria",
+      "label": "Descripción accesible del comparador",
+      "default": "Comparador de una pegatina blanca y una pegatina azul sobre la uña"
+    },
+    {
+      "type": "header",
+      "content": "Estados"
+    },
+    {
+      "type": "text",
+      "id": "state_white_title",
+      "label": "Título (sin cambio)",
+      "default": "Se queda blanca"
+    },
+    {
+      "type": "textarea",
+      "id": "state_white_text",
+      "label": "Texto (sin cambio)",
+      "default": "No se aprecia reacción frente a GHB o ketamina en esa muestra. No descarta otras sustancias ni garantiza que la bebida sea segura."
+    },
+    {
+      "type": "text",
+      "id": "state_blue_title",
+      "label": "Título (azul)",
+      "default": "Vira a azul"
+    },
+    {
+      "type": "textarea",
+      "id": "state_blue_text",
+      "label": "Texto (azul)",
+      "default": "Posible presencia de GHB o ketamina. No consumas la bebida y pide ayuda a alguien de confianza."
+    },
+    {
+      "type": "text",
+      "id": "limits_title",
+      "label": "Título del bloque de límites",
+      "default": "Ten esto en cuenta"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del enlace",
+      "default": "Leer todas las preguntas"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Enlace"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "limit",
+      "name": "Límite o advertencia",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "info", "label": "Información" },
+            { "value": "flask", "label": "Frasco" },
+            { "value": "shield", "label": "Escudo" },
+            { "value": "clock", "label": "Reloj" }
+          ],
+          "default": "info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Blanco no significa seguro"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Descripción",
+          "default": "Un resultado sin cambio de color no descarta otras sustancias ni garantiza que la bebida esté libre de riesgos."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inicio · Resultado"
+    }
+  ]
+}
+{% endschema %}

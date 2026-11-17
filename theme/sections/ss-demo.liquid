@@ -1,0 +1,98 @@
+{%- comment -%} SS · PDP — Demostración interactiva (antes/después + pasos) {%- endcomment -%}
+
+<div class="ss-pdp ss-demo" id="demo">
+  <div class="ss-wrap">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ss-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <h2 class="ss-section-title">{{ section.settings.title }}</h2>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="ss-section-sub">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="ss-demo-wrap">
+      <div
+        class="ss-slider"
+        data-ss-slider
+        tabindex="0"
+        role="slider"
+        aria-label="{{ section.settings.slider_aria | escape }}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="50"
+      >
+        {% render 'ss-image',
+          image: section.settings.image_before,
+          asset: 'pdp-ss-before-nail.jpg',
+          alt: section.settings.alt_before,
+          sizes: '(min-width: 750px) 560px, 100vw',
+          loading: 'lazy'
+        %}
+        <img
+          class="ss-after"
+          data-ss-slider-after
+          src="{% if section.settings.image_after != blank %}{{ section.settings.image_after | image_url: width: 1200 }}{% else %}{{ 'pdp-ss-after-nail.jpg' | asset_url }}{% endif %}"
+          alt="{{ section.settings.alt_after | escape }}"
+          loading="lazy"
+          width="1200"
+          height="1200"
+        >
+        <span class="ss-slider-tag ss-left">{{ section.settings.tag_before }}</span>
+        <span class="ss-slider-tag ss-right">{{ section.settings.tag_after }}</span>
+        <div class="ss-slider-handle" data-ss-slider-handle>
+          <div class="ss-slider-knob">
+            {% render 'ss-icon', name: 'arrows', size: 22, stroke: 2.4 %}
+          </div>
+        </div>
+      </div>
+      <p class="ss-slider-legend">
+        <span class="ss-w">{{ section.settings.legend_before }}</span> ·
+        <span class="ss-b">{{ section.settings.legend_after }}</span>
+      </p>
+    </div>
+
+    <div class="ss-steps">
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'step' -%}{%- continue -%}{%- endif -%}
+        <div class="ss-step" {{ block.shopify_attributes }}>
+          <div class="ss-step-num">{{ forloop.index }}</div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · Demostración",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Demostración real" },
+    { "type": "text", "id": "title", "label": "Título", "default": "De blanco a azul en 10 segundos: sin dudas y sin miradas" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Desliza sobre la imagen para ver exactamente cómo reacciona la pegatina al detectar GHB o ketamina." },
+    { "type": "header", "content": "Comparador" },
+    { "type": "image_picker", "id": "image_before", "label": "Imagen antes", "info": "Vacío = imagen incluida en el tema." },
+    { "type": "text", "id": "alt_before", "label": "Texto alternativo (antes)" },
+    { "type": "image_picker", "id": "image_after", "label": "Imagen después", "info": "Vacío = imagen incluida en el tema." },
+    { "type": "text", "id": "alt_after", "label": "Texto alternativo (después)" },
+    { "type": "text", "id": "tag_before", "label": "Etiqueta antes", "default": "Antes · Blanco" },
+    { "type": "text", "id": "tag_after", "label": "Etiqueta después", "default": "Detectado · Azul" },
+    { "type": "text", "id": "legend_before", "label": "Leyenda antes", "default": "Blanco = sin detección" },
+    { "type": "text", "id": "legend_after", "label": "Leyenda después", "default": "Azul intenso = no bebas esa copa" },
+    { "type": "text", "id": "slider_aria", "label": "Descripción accesible", "default": "Comparador antes y después" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Pégala en tu uña" },
+        { "type": "textarea", "id": "text", "label": "Texto" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SS · Demostración" }]
+}
+{% endschema %}

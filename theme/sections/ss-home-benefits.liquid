@@ -1,0 +1,122 @@
+{%- comment -%} SS · Home — Beneficios principales {%- endcomment -%}
+
+<div class="ss-pdp ss-home ss-h-benefits">
+  <div class="ss-wrap">
+    <div class="ss-h-benefits__grid">
+      <div class="ss-h-benefits__intro ss-h-head ss-h-head--left">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ss-h-kicker">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="ss-h-title">
+          {{ section.settings.title }}
+          {%- if section.settings.title_accent != blank %}
+            <span class="ss-serif">{{ section.settings.title_accent }}</span>
+          {%- endif -%}
+        </h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p>{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+        {%- if section.settings.footnote != blank -%}
+          <p class="ss-h-benefits__foot">
+            {% render 'ss-icon', name: 'sparkles', size: 15, stroke: 1.8 %}
+            {{ section.settings.footnote }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <div class="ss-h-benefits__cards">
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'benefit' -%}{%- continue -%}{%- endif -%}
+          <article class="ss-h-benefit" {{ block.shopify_attributes }}>
+            <div class="ss-h-benefit__ico">
+              {% render 'ss-icon', name: block.settings.icon, size: 20, stroke: 1.8 %}
+            </div>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </article>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Inicio · Beneficios",
+  "tag": "section",
+  "class": "ss-home-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "Por qué las eligen"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Pensadas para llevarlas puestas,"
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Parte destacada en cursiva",
+      "default": "no para esconderlas."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Descripción",
+      "default": "Una comprobación rápida que encaja en tu noche sin cambiar tus planes ni tu estilo."
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Nota inferior",
+      "default": "Sin pilas, sin apps y sin aparatos que llevar encima."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "heart", "label": "Corazón" },
+            { "value": "clock", "label": "Reloj" },
+            { "value": "tote", "label": "Bolso" },
+            { "value": "box", "label": "Caja" },
+            { "value": "shield-check", "label": "Escudo" },
+            { "value": "flask", "label": "Frasco" },
+            { "value": "sparkles", "label": "Estrellas" },
+            { "value": "star", "label": "Estrella" }
+          ],
+          "default": "heart"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Discreción real"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Descripción",
+          "default": "El diseño parece una decoración de uñas más. Nadie necesita saber que estás comprobando tu bebida."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inicio · Beneficios"
+    }
+  ]
+}
+{% endschema %}

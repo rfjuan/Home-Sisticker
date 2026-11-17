@@ -1,0 +1,87 @@
+{%- comment -%}
+  SS · Home — CTA fijo en móvil
+  Solo visible en pantallas pequeñas y tras pasar el hero. Se oculta cerca del
+  final de la página para no tapar el footer ni el formulario de suscripción.
+{%- endcomment -%}
+
+{%- liquid
+  assign ss_product = section.settings.product
+  if ss_product == blank
+    assign ss_product = all_products['drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10']
+  endif
+  if ss_product != blank
+    assign ss_title = ss_product.title
+    assign ss_price = ss_product.price
+    assign ss_image = ss_product.featured_image
+  endif
+  assign ss_cta_url = ss_product.url | default: '/collections/all'
+-%}
+
+<div class="ss-pdp ss-home ss-h-sticky" data-ss-home-sticky aria-hidden="true">
+  <div class="ss-h-sticky__inner">
+    {%- if ss_image != blank -%}
+      <img
+        class="ss-h-sticky__thumb"
+        src="{{ ss_image | image_url: width: 120 }}"
+        alt=""
+        width="42"
+        height="42"
+        loading="lazy"
+      >
+    {%- else -%}
+      <img
+        class="ss-h-sticky__thumb"
+        src="{{ 'pdp-ss-hero-pack.jpg' | asset_url }}"
+        alt=""
+        width="42"
+        height="42"
+        loading="lazy"
+      >
+    {%- endif -%}
+    <div class="ss-h-sticky__info">
+      <b>{{ ss_title | default: section.settings.fallback_title }}</b>
+      {%- if ss_price != blank -%}
+        <span>{{ section.settings.price_prefix }} {{ ss_price | money }}</span>
+      {%- endif -%}
+    </div>
+    <a class="ss-h-btn" href="{{ ss_cta_url }}" tabindex="-1">{{ section.settings.cta_label }}</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Inicio · CTA fijo móvil",
+  "tag": "section",
+  "class": "ss-home-section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto"
+    },
+    {
+      "type": "text",
+      "id": "fallback_title",
+      "label": "Título si no hay producto",
+      "default": "Pegatinas Detectoras"
+    },
+    {
+      "type": "text",
+      "id": "price_prefix",
+      "label": "Prefijo del precio",
+      "default": "Desde"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del botón",
+      "default": "Elegir pack"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inicio · CTA fijo móvil"
+    }
+  ]
+}
+{% endschema %}

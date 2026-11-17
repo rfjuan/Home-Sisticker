@@ -1,0 +1,67 @@
+{%- comment -%} SS · PDP — UGC (así lo llevan) {%- endcomment -%}
+
+{%- liquid
+  assign ss_ugc_fallbacks = 'pdp-ss-ugc-1.jpg,pdp-ss-ugc-2.jpg,pdp-ss-ugc-3.jpg' | split: ','
+-%}
+
+<div class="ss-pdp ss-ugc">
+  <div class="ss-wrap">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ss-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <h2 class="ss-section-title">{{ section.settings.title }}</h2>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="ss-section-sub">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="ss-ugc-grid">
+      {%- assign ss_index = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'card' -%}{%- continue -%}{%- endif -%}
+        {%- assign ss_fallback_asset = ss_ugc_fallbacks[ss_index] | default: ss_ugc_fallbacks[0] -%}
+        <figure class="ss-ugc-card" {{ block.shopify_attributes }}>
+          {% render 'ss-image',
+            image: block.settings.image,
+            asset: ss_fallback_asset,
+            alt: block.settings.alt,
+            sizes: '(min-width: 750px) 33vw, 33vw',
+            loading: 'lazy'
+          %}
+          {%- if block.settings.show_play -%}
+            <span class="ss-ugc-play">{% render 'ss-icon', name: 'play', size: 11 %}</span>
+          {%- endif -%}
+          {%- if block.settings.caption != blank -%}
+            <figcaption class="ss-ugc-cap">{{ block.settings.caption }}</figcaption>
+          {%- endif -%}
+        </figure>
+        {%- assign ss_index = ss_index | plus: 1 -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · UGC",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Así lo llevan miles de chicas" },
+    { "type": "text", "id": "title", "label": "Título", "default": "El nuevo imprescindible en el bolso de noche" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Diseñadas para integrarse en tu rutina antes de salir: bonitas en tus uñas, invisibles para el resto." }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Tarjeta UGC",
+      "limit": 6,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagen", "info": "Vacío = imagen incluida en el tema." },
+        { "type": "text", "id": "alt", "label": "Texto alternativo" },
+        { "type": "text", "id": "caption", "label": "Pie de foto" },
+        { "type": "checkbox", "id": "show_play", "label": "Mostrar icono de reproducción", "default": true }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SS · UGC" }]
+}
+{% endschema %}

@@ -1,0 +1,145 @@
+{%- comment -%} SS · Home — CTA final {%- endcomment -%}
+
+{%- liquid
+  assign ss_product = section.settings.product
+  if ss_product == blank
+    assign ss_product = all_products['drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10']
+  endif
+  assign ss_cta_url = section.settings.cta_link
+  if ss_cta_url == blank
+    assign ss_cta_url = ss_product.url | default: '/collections/all'
+  endif
+-%}
+
+<div class="ss-pdp ss-home ss-h-final">
+  <div class="ss-wrap">
+    <div class="ss-h-final__inner">
+      {%- if section.settings.show_thumb -%}
+        {%- if ss_product != blank and ss_product.featured_image != blank -%}
+          <img
+            class="ss-h-final__thumb"
+            src="{{ ss_product.featured_image | image_url: width: 240 }}"
+            srcset="
+              {{ ss_product.featured_image | image_url: width: 184 }} 184w,
+              {{ ss_product.featured_image | image_url: width: 368 }} 368w
+            "
+            sizes="92px"
+            alt="{{ ss_product.featured_image.alt | default: ss_product.title | escape }}"
+            width="92"
+            height="92"
+            loading="lazy"
+          >
+        {%- else -%}
+          <img
+            class="ss-h-final__thumb"
+            src="{{ 'pdp-ss-hero-pack.jpg' | asset_url }}"
+            alt="{{ section.settings.image_alt | escape }}"
+            width="92"
+            height="92"
+            loading="lazy"
+          >
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ss-h-kicker">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      <h2>
+        {{ section.settings.title }}
+        {%- if section.settings.title_accent != blank %}
+          <span class="ss-serif">{{ section.settings.title_accent }}</span>
+        {%- endif -%}
+      </h2>
+
+      {%- if section.settings.text != blank -%}
+        <p>{{ section.settings.text }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.cta_label != blank -%}
+        <a class="ss-h-btn ss-h-btn--light" href="{{ ss_cta_url }}">
+          {{ section.settings.cta_label }}
+          {% render 'ss-icon', name: 'bag', size: 17, stroke: 2 %}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.note != blank -%}
+        <span class="ss-h-final__note">{{ section.settings.note }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Inicio · CTA final",
+  "tag": "section",
+  "class": "ss-home-section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto del enlace"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thumb",
+      "label": "Mostrar imagen del producto",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Texto alternativo de la imagen",
+      "default": "Sobre de pegatinas detectoras para bebidas"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "La próxima noche"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Un gesto pequeño."
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Parte destacada en cursiva",
+      "default": "Una tranquilidad más."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto",
+      "default": "Llévalas puestas, comparte el pack con quien salgas y ten la comprobación lista en segundos."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del botón",
+      "default": "Elegir mi pack"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Enlace del botón",
+      "info": "Si se deja vacío se enlaza la página del producto."
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Nota",
+      "default": "Envío gratis en 2+ packs · Devoluciones en 14 días"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inicio · CTA final"
+    }
+  ]
+}
+{% endschema %}

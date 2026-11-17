@@ -1,0 +1,93 @@
+{%- comment -%} SS · PDP — Comparativa {%- endcomment -%}
+
+<div class="ss-pdp ss-compare">
+  <div class="ss-wrap">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="ss-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    <h2 class="ss-section-title">{{ section.settings.title }}</h2>
+
+    <div class="ss-compare-grid">
+      <div class="ss-vs-card ss-us">
+        <h3>
+          {% render 'ss-icon', name: 'heart', size: 20, stroke: 1.8 %}
+          {{ section.settings.us_title }}
+        </h3>
+        <ul>
+          {%- for block in section.blocks -%}
+            {%- if block.type != 'row' or block.settings.column != 'us' -%}{%- continue -%}{%- endif -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="ss-vs-ico">{% render 'ss-icon', name: 'check', size: 12, stroke: 3 %}</span>
+              <span>
+                <b>{{ block.settings.strong }}</b>
+                <span>{{ block.settings.text }}</span>
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="ss-vs-card ss-them">
+        <h3>{{ section.settings.them_title }}</h3>
+        <ul>
+          {%- for block in section.blocks -%}
+            {%- if block.type != 'row' or block.settings.column != 'them' -%}{%- continue -%}{%- endif -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="ss-vs-ico{% if block.settings.positive %} ss-ok{% endif %}">
+                {%- if block.settings.positive -%}
+                  {% render 'ss-icon', name: 'check', size: 12, stroke: 3 %}
+                {%- else -%}
+                  {% render 'ss-icon', name: 'cross', size: 12, stroke: 3 %}
+                {%- endif -%}
+              </span>
+              <span>
+                <b>{{ block.settings.strong }}</b>
+                <span>{{ block.settings.text }}</span>
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+
+    {%- if section.settings.note != blank -%}
+      <p class="ss-vs-note">{{ section.settings.note }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · Comparativa",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "La diferencia real" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Pegatinas detectoras frente a tiras reactivas" },
+    { "type": "text", "id": "us_title", "label": "Título columna marca", "default": "Nuestras pegatinas" },
+    { "type": "text", "id": "them_title", "label": "Título columna competencia", "default": "Tiras reactivas clásicas" },
+    { "type": "textarea", "id": "note", "label": "Nota final" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Característica",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Columna",
+          "options": [
+            { "value": "us", "label": "Nuestras pegatinas" },
+            { "value": "them", "label": "Competencia" }
+          ],
+          "default": "us"
+        },
+        { "type": "text", "id": "strong", "label": "Título" },
+        { "type": "text", "id": "text", "label": "Descripción" },
+        { "type": "checkbox", "id": "positive", "label": "Marcar como positivo (solo competencia)", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SS · Comparativa" }]
+}
+{% endschema %}

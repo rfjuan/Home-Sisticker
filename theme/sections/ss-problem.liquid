@@ -1,0 +1,95 @@
+{%- comment -%} SS · PDP — Problema y mecanismo {%- endcomment -%}
+
+<div class="ss-pdp ss-problem">
+  <div class="ss-wrap">
+    <div class="ss-problem-grid">
+      <div class="ss-problem-img">
+        {% render 'ss-image',
+          image: section.settings.image,
+          asset: 'pdp-ss-lifestyle.jpg',
+          alt: section.settings.alt,
+          sizes: '(min-width: 990px) 50vw, 100vw',
+          loading: 'lazy'
+        %}
+      </div>
+      <div class="ss-problem-copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ss-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="ss-section-title">{{ section.settings.title }}</h2>
+        <div class="ss-problem-body">{{ section.settings.body }}</div>
+        {%- if section.settings.closing != blank -%}
+          <p class="ss-closing">{{ section.settings.closing }}</p>
+        {%- endif -%}
+
+        <div class="ss-indicators">
+          <div class="ss-ind">
+            <span class="ss-chip"></span>
+            <b>{{ section.settings.indicator_ok_title }}</b>
+            <span>{{ section.settings.indicator_ok_text }}</span>
+          </div>
+          <div class="ss-ind ss-blue">
+            <span class="ss-chip"></span>
+            <b>{{ section.settings.indicator_alert_title }}</b>
+            <span>{{ section.settings.indicator_alert_text }}</span>
+          </div>
+        </div>
+
+        <div class="ss-pillars">
+          {%- for block in section.blocks -%}
+            {%- if block.type != 'pillar' -%}{%- continue -%}{%- endif -%}
+            <span class="ss-pillar" {{ block.shopify_attributes }}>
+              {% render 'ss-icon', name: block.settings.icon, size: 18, stroke: 1.8, color: '#6D303F' %}
+              {{ block.settings.label }}
+            </span>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · Problema",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Pensado por y para chicas" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Salir de fiesta va de crear recuerdos con tus amigas, no de vigilar tu vaso con angustia" },
+    { "type": "richtext", "id": "body", "label": "Texto" },
+    { "type": "text", "id": "closing", "label": "Frase de cierre", "default": "Porque arreglarte como te gusta y cuidar de ti misma van de la mano." },
+    { "type": "header", "content": "Imagen" },
+    { "type": "image_picker", "id": "image", "label": "Imagen", "info": "Vacío = imagen incluida en el tema." },
+    { "type": "text", "id": "alt", "label": "Texto alternativo" },
+    { "type": "header", "content": "Indicadores" },
+    { "type": "text", "id": "indicator_ok_title", "label": "Título (sin detección)", "default": "Permanece blanca" },
+    { "type": "text", "id": "indicator_ok_text", "label": "Texto (sin detección)", "default": "Sin detección de GHB / ketamina" },
+    { "type": "text", "id": "indicator_alert_title", "label": "Título (detección)", "default": "Cambia a azul" },
+    { "type": "text", "id": "indicator_alert_text", "label": "Texto (detección)", "default": "Sustancia detectada · No beber" }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pilar",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "shield", "label": "Escudo" },
+            { "value": "clock", "label": "Reloj" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "bag", "label": "Bolso" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "gift", "label": "Regalo" }
+          ],
+          "default": "shield"
+        },
+        { "type": "text", "id": "label", "label": "Texto", "default": "Tranquilidad extra" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SS · Problema" }]
+}
+{% endschema %}

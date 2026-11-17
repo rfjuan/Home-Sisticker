@@ -1,0 +1,510 @@
+{
+  "sections": {
+    "hero": {
+      "type": "ss-home-hero",
+      "settings": {
+        "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
+      },
+      "blocks": {
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "icon": "heart",
+            "text": "Parecen nail art, no un test"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "icon": "clock",
+            "text": "Resultado en unos 10 segundos"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "icon": "tote",
+            "text": "Caben en el bolso más pequeño"
+          }
+        }
+      },
+      "block_order": [
+        "bullet_1",
+        "bullet_2",
+        "bullet_3"
+      ]
+    },
+    "trust": {
+      "type": "ss-home-trust",
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "label": "Envío gratis en 2+ packs"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "icon": "clock",
+            "label": "Preparación en 24–72 h"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "icon": "refresh",
+            "label": "Devoluciones en 14 días"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "icon": "lock",
+            "label": "Pago seguro en Shopify"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ]
+    },
+    "benefits": {
+      "type": "ss-home-benefits",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "heart",
+            "title": "Discreción real",
+            "text": "El diseño parece una decoración de uñas más. Nadie necesita saber que estás comprobando tu bebida."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "clock",
+            "title": "Rápido de leer",
+            "text": "Una gota sobre la pegatina y unos 10 segundos. Si vira a azul, no sigas bebiendo."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "tote",
+            "title": "Cabe en cualquier bolso",
+            "text": "El sobre es plano y ligero: entra en el bolso de fiesta, en el neceser o en el bolsillo."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "box",
+            "title": "Un uso por pegatina",
+            "text": "Cada comprobación estrena pegatina. Diez por pack para repartir entre varias noches o con amigas."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
+      ]
+    },
+    "how": {
+      "type": "ss-home-how",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "fallback": "sheet",
+            "alt": "Lámina de diez pegatinas con diseños de corazones, flores, estrellas y mariposas",
+            "title": "Coloca la pegatina",
+            "text": "Pega una pegatina limpia y seca en tu uña antes de salir. También puedes llevarla en el sobre hasta el momento de usarla.",
+            "tip": "Con la uña limpia y seca"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "fallback": "before",
+            "alt": "Uña con pegatina blanca antes de la comprobación",
+            "title": "Toca una gota",
+            "text": "Toma una pequeña cantidad de tu bebida con la yema del dedo y deposítala sobre la superficie reactiva.",
+            "tip": "Con una gota es suficiente"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "fallback": "after",
+            "alt": "Uña con pegatina azul tras el contacto con la bebida",
+            "title": "Mira el color",
+            "text": "Espera unos 10 segundos. Si la pegatina vira a azul, no bebas esa bebida y avisa a alguien de confianza.",
+            "tip": "Ante cualquier duda, no sigas bebiendo"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ]
+    },
+    "result": {
+      "type": "ss-home-result",
+      "blocks": {
+        "limit_1": {
+          "type": "limit",
+          "settings": {
+            "icon": "info",
+            "title": "Blanco no significa seguro",
+            "text": "Un resultado sin cambio de color no descarta otras sustancias ni garantiza que la bebida esté libre de riesgos."
+          }
+        },
+        "limit_2": {
+          "type": "limit",
+          "settings": {
+            "icon": "flask",
+            "title": "Algunas bebidas complican la lectura",
+            "text": "Las bebidas muy oscuras, espesas, lácteas o con colorantes intensos pueden dificultar la interpretación del color."
+          }
+        },
+        "limit_3": {
+          "type": "limit",
+          "settings": {
+            "icon": "shield",
+            "title": "Una precaución, no un escudo",
+            "text": "No sustituye las medidas básicas: vigila tu copa, no aceptes bebidas abiertas y, ante cualquier duda, no bebas."
+          }
+        }
+      },
+      "block_order": [
+        "limit_1",
+        "limit_2",
+        "limit_3"
+      ]
+    },
+    "lifestyle": {
+      "type": "ss-home-lifestyle",
+      "settings": {
+        "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
+      }
+    },
+    "compare": {
+      "type": "ss-compare",
+      "settings": {
+        "eyebrow": "Frente a otras opciones",
+        "title": "Pegatinas detectoras frente a tiras reactivas",
+        "us_title": "Nuestras pegatinas",
+        "them_title": "Tiras reactivas",
+        "note": "Ninguna comprobación rápida sustituye las medidas básicas de seguridad ni descarta al 100 % la presencia de sustancias."
+      },
+      "blocks": {
+        "us_1": {
+          "type": "row",
+          "settings": {
+            "column": "us",
+            "strong": "Parece nail art",
+            "text": "Nadie a tu alrededor necesita saber que estás comprobando tu bebida."
+          }
+        },
+        "us_2": {
+          "type": "row",
+          "settings": {
+            "column": "us",
+            "strong": "Siempre a mano",
+            "text": "Ya la llevas puesta: no hay que buscarla en el bolso."
+          }
+        },
+        "us_3": {
+          "type": "row",
+          "settings": {
+            "column": "us",
+            "strong": "Lectura visual",
+            "text": "Una gota sobre la pegatina y un vistazo al color."
+          }
+        },
+        "us_4": {
+          "type": "row",
+          "settings": {
+            "column": "us",
+            "strong": "Formato plano",
+            "text": "Se guarda en el bolso sin abultar."
+          }
+        },
+        "them_1": {
+          "type": "row",
+          "settings": {
+            "column": "them",
+            "strong": "Aspecto clínico",
+            "text": "Se nota que estás haciendo una comprobación.",
+            "positive": false
+          }
+        },
+        "them_2": {
+          "type": "row",
+          "settings": {
+            "column": "them",
+            "strong": "Hay que acordarse de llevarlas",
+            "text": "Si no están en el bolso, no las tienes.",
+            "positive": false
+          }
+        },
+        "them_3": {
+          "type": "row",
+          "settings": {
+            "column": "them",
+            "strong": "Lectura menos discreta",
+            "text": "Hay que sujetar la tira y esperar, y llama más la atención.",
+            "positive": false
+          }
+        },
+        "them_4": {
+          "type": "row",
+          "settings": {
+            "column": "them",
+            "strong": "Mismo objetivo",
+            "text": "También buscan detectar GHB y ketamina en la bebida.",
+            "positive": true
+          }
+        }
+      },
+      "block_order": [
+        "us_1",
+        "us_2",
+        "us_3",
+        "us_4",
+        "them_1",
+        "them_2",
+        "them_3",
+        "them_4"
+      ]
+    },
+    "product": {
+      "type": "ss-home-product",
+      "settings": {
+        "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
+      },
+      "blocks": {
+        "pack_1": {
+          "type": "pack",
+          "settings": {
+            "title": "1 pack",
+            "meta": "10 pegatinas",
+            "tag": "",
+            "highlight": false
+          }
+        },
+        "pack_2": {
+          "type": "pack",
+          "settings": {
+            "title": "2 packs",
+            "meta": "20 pegatinas",
+            "tag": "2.º al 50 %",
+            "highlight": true
+          }
+        },
+        "pack_3": {
+          "type": "pack",
+          "settings": {
+            "title": "3 packs",
+            "meta": "30 pegatinas",
+            "tag": "3.º gratis",
+            "highlight": false
+          }
+        },
+        "include_1": {
+          "type": "include",
+          "settings": {
+            "text": "10 pegatinas por pack"
+          }
+        },
+        "include_2": {
+          "type": "include",
+          "settings": {
+            "text": "Diseños variados: corazones, flores, estrellas y mariposas"
+          }
+        },
+        "include_3": {
+          "type": "include",
+          "settings": {
+            "text": "Instrucciones paso a paso en cada sobre"
+          }
+        },
+        "include_4": {
+          "type": "include",
+          "settings": {
+            "text": "Un solo uso por pegatina"
+          }
+        }
+      },
+      "block_order": [
+        "pack_1",
+        "pack_2",
+        "pack_3",
+        "include_1",
+        "include_2",
+        "include_3",
+        "include_4"
+      ]
+    },
+    "faq": {
+      "type": "ss-faq",
+      "settings": {
+        "eyebrow": "Antes de comprar",
+        "title": "Preguntas frecuentes"
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cómo se usan las pegatinas?",
+            "answer": "<p>Coloca una pegatina limpia y seca sobre la uña antes de salir. Cuando quieras comprobar tu bebida, toma una pequeña gota con la yema del dedo y deposítala sobre la superficie reactiva. Espera unos 10 segundos y mira el color.</p><p>Cada pegatina es de un solo uso. Las instrucciones completas vienen en cada sobre y son la referencia para interpretar el resultado.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué sustancias puede detectar?",
+            "answer": "<p>Según la información del fabricante, la superficie reactiva está pensada para detectar <b>GHB y ketamina</b>. No detecta otras sustancias ni alteraciones de la bebida.</p>",
+            "safety_note": "<p>Ninguna comprobación rápida garantiza al 100 % que una bebida sea segura.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Funciona con cualquier bebida?",
+            "answer": "<p>Está pensada para muestras de bebidas habituales. Las bebidas muy oscuras, espesas, lácteas o con colorantes intensos pueden dificultar la lectura del color. Sigue siempre las instrucciones del envase.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué significa que no cambie de color?",
+            "answer": "<p>Que no se aprecia reacción frente a GHB o ketamina en esa muestra. No descarta otras sustancias ni garantiza que la bebida esté libre de riesgos: un resultado negativo no es una prueba de seguridad.</p>",
+            "safety_note": "<p>Si tienes cualquier duda sobre tu bebida, no la consumas. No pierdas de vista tu vaso y no aceptes bebidas abiertas de desconocidos.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuántas comprobaciones incluye cada pack?",
+            "answer": "<p>Cada pack incluye <b>10 pegatinas de un solo uso</b>. Con la oferta de 2 packs recibes 20 pegatinas y con el pack de 3, 30 pegatinas.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto tarda en llegar mi pedido?",
+            "answer": "<p>Preparamos los pedidos en 24–72 h laborables y enviamos solo a España. Cuando el paquete sale del almacén recibes un email con el seguimiento. El envío es gratis al elegir 2 packs o más.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Puedo devolverlo?",
+            "answer": "<p>Sí. Puedes solicitar la devolución dentro de los 14 días posteriores a la entrega. Escríbenos a <b>tienda@minirueda.com</b> y te indicamos cómo hacerlo según nuestra <a href=\"/policies/refund-policy\">política de devoluciones</a>.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cómo contacto con vosotros?",
+            "answer": "<p>Escríbenos a <b>tienda@minirueda.com</b>. Respondemos desde España y podemos ayudarte con dudas de uso, envíos o devoluciones.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8"
+      ]
+    },
+    "service": {
+      "type": "ss-home-service",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "icon": "truck",
+            "title": "Envío a toda España",
+            "text": "Preparamos tu pedido en 24–72 h laborables y te enviamos el seguimiento por email.",
+            "link_label": "Política de envío",
+            "link_url": "/policies/shipping-policy"
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "icon": "refresh",
+            "title": "Devoluciones en 14 días",
+            "text": "Escríbenos dentro de los 14 días posteriores a la entrega y te explicamos cómo devolverlo.",
+            "link_label": "Política de devoluciones",
+            "link_url": "/policies/refund-policy"
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "icon": "heart",
+            "title": "Atención por email",
+            "text": "Resolvemos dudas de uso, envíos o devoluciones desde tienda@minirueda.com.",
+            "link_label": "Escríbenos",
+            "link_url": "mailto:tienda@minirueda.com"
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "icon": "lock",
+            "title": "Checkout de Shopify",
+            "text": "El pago se completa en el checkout seguro de Shopify, con los métodos disponibles al finalizar la compra."
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ]
+    },
+    "final": {
+      "type": "ss-home-final",
+      "settings": {
+        "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
+      }
+    },
+    "sticky": {
+      "type": "ss-home-sticky",
+      "settings": {
+        "product": "drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "benefits",
+    "how",
+    "result",
+    "lifestyle",
+    "compare",
+    "product",
+    "faq",
+    "service",
+    "sticky",
+    "final"
+  ]
+}

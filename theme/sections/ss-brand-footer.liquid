@@ -1,0 +1,36 @@
+{%- comment -%} SS · PDP — Pie de página de marca {%- endcomment -%}
+
+<div class="ss-pdp ss-footer">
+  <div class="ss-wrap">
+    <div class="ss-brand">{{ section.settings.brand | default: shop.name }}</div>
+    {%- if section.settings.text != blank -%}
+      <p>{{ section.settings.text }}</p>
+    {%- endif -%}
+    <div class="ss-pay">
+      {%- for block in section.blocks -%}
+        <span {{ block.shopify_attributes }}>{{ block.settings.label }}</span>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · Pie de marca",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Marca", "default": "MiniRueda" },
+    { "type": "text", "id": "text", "label": "Texto", "default": "Pegatinas detectoras para bebidas · Envíos a toda España · Garantía de 14 días" }
+  ],
+  "blocks": [
+    {
+      "type": "method",
+      "name": "Método de pago",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Nombre", "default": "VISA" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SS · Pie de marca" }]
+}
+{% endschema %}

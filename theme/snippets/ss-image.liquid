@@ -1,0 +1,68 @@
+{%- doc -%}
+  Renders a responsive image. Uses the merchant's image when set (image_picker),
+  otherwise falls back to the bundled theme asset so the page looks identical
+  out of the box.
+
+  @param {object} [image] - Image object from an image_picker setting
+  @param {string} [asset] - Theme asset filename without folder (e.g. 'pdp-ss-hero.jpg')
+  @param {string} alt - Alternative text
+  @param {string} [sizes] - sizes attribute
+  @param {string} [class] - Extra CSS classes
+  @param {string} [loading] - 'lazy' or 'eager'
+  @param {string} [fetchpriority] - 'high' or 'low'
+  @param {number} [width] - Base width hint
+  @param {number} [height] - Height hint
+{%- enddoc -%}
+
+{%- liquid
+  assign img_width = width | default: 1200
+  assign img_loading = loading | default: 'lazy'
+-%}
+
+{%- if image != blank -%}
+  <img
+    src="{{ image | image_url: width: img_width }}"
+    srcset="
+      {{ image | image_url: width: 400 }} 400w,
+      {{ image | image_url: width: 600 }} 600w,
+      {{ image | image_url: width: 800 }} 800w,
+      {{ image | image_url: width: 1200 }} 1200w
+    "
+    sizes="{{ sizes | default: '(min-width: 990px) 50vw, 100vw' }}"
+    alt="{{ alt | escape }}"
+    width="{{ image.width }}"
+    height="{{ image.height }}"
+    loading="{{ img_loading }}"
+    {% if fetchpriority %}
+      fetchpriority="{{ fetchpriority }}"
+    {% endif %}
+    {% if class %}
+      class="{{ class }}"
+    {% endif %}
+  >
+{%- elsif asset != blank -%}
+  <img
+    src="{{ asset | asset_url }}"
+    srcset="
+      {{ asset | asset_img_url: '400x' }} 400w,
+      {{ asset | asset_img_url: '600x' }} 600w,
+      {{ asset | asset_img_url: '800x' }} 800w,
+      {{ asset | asset_img_url: '1200x' }} 1200w
+    "
+    sizes="{{ sizes | default: '(min-width: 990px) 50vw, 100vw' }}"
+    alt="{{ alt | escape }}"
+    {% if width %}
+      width="{{ width }}"
+    {% endif %}
+    {% if height %}
+      height="{{ height }}"
+    {% endif %}
+    loading="{{ img_loading }}"
+    {% if fetchpriority %}
+      fetchpriority="{{ fetchpriority }}"
+    {% endif %}
+    {% if class %}
+      class="{{ class }}"
+    {% endif %}
+  >
+{%- endif -%}

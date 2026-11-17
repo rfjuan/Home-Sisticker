@@ -1,0 +1,61 @@
+{%- comment -%} SS · Home — Franja de confianza (4 mensajes verificables) {%- endcomment -%}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="ss-pdp ss-home ss-h-trust">
+    <div class="ss-wrap">
+      <ul class="ss-h-trust__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'item' -%}{%- continue -%}{%- endif -%}
+          <li class="ss-h-trust__item" {{ block.shopify_attributes }}>
+            {% render 'ss-icon', name: block.settings.icon, size: 18, stroke: 1.9 %}
+            <span>{{ block.settings.label }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Inicio · Franja",
+  "tag": "section",
+  "class": "ss-home-section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Mensaje",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "truck", "label": "Camión" },
+            { "value": "clock", "label": "Reloj" },
+            { "value": "refresh", "label": "Devoluciones" },
+            { "value": "lock", "label": "Candado" },
+            { "value": "shield-check", "label": "Escudo" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "box", "label": "Caja" },
+            { "value": "star", "label": "Estrella" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "Envío gratis en 2+ packs"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inicio · Franja"
+    }
+  ]
+}
+{% endschema %}

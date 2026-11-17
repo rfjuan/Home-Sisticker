@@ -1,0 +1,54 @@
+{%- comment -%} SS · PDP — Marquee de confianza {%- endcomment -%}
+
+<div class="ss-pdp ss-marquee-wrap">
+  <div class="ss-marquee" aria-hidden="true">
+    <div class="ss-marquee-track" data-ss-marquee>
+      {%- for block in section.blocks -%}
+        <span class="ss-marquee-item" {{ block.shopify_attributes }}>
+          {% render 'ss-icon', name: block.settings.icon, size: 16, stroke: 2, color: '#F6C8D4' %}
+          {{ block.settings.label }}
+        </span>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · Marquee",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Mensaje",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "truck", "label": "Camión" },
+            { "value": "clock", "label": "Reloj" },
+            { "value": "shield-check", "label": "Escudo" },
+            { "value": "lock", "label": "Candado" },
+            { "value": "refresh", "label": "Atención 24/7" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "star", "label": "Estrella" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "ENVÍO GRATIS EN 2+ PACKS"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "SS · Marquee" }
+  ]
+}
+{% endschema %}

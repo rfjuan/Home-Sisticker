@@ -1,0 +1,721 @@
+{%- comment -%}
+  SS · PDP Premium — Buy box (galería + packs + formulario nativo + sticky ATC)
+  ------------------------------------------------------------------------------
+  La selección de pack escribe la cantidad real en el formulario de producto del
+  tema, así que el carrito, los descuentos automáticos y el drawer son nativos.
+{%- endcomment -%}
+
+{%- liquid
+  assign ss_product = section.settings.product | default: product
+  assign ss_variant = ss_product.selected_or_first_available_variant
+  assign ss_unit = ss_variant.price
+  assign ss_gallery_fallback = 'pdp-ss-hero-pack.jpg,pdp-ss-sheet-macro.jpg,pdp-ss-before-nail.jpg,pdp-ss-after-nail.jpg' | split: ','
+
+  # Pack preseleccionado (por defecto "Más popular")
+  assign ss_preset = blank
+  for block in section.blocks
+    if block.type == 'bundle' and block.settings.preselect
+      assign ss_preset = block
+      break
+    endif
+  endfor
+  if ss_preset == blank
+    for block in section.blocks
+      if block.type == 'bundle'
+        assign ss_preset = block
+        break
+      endif
+    endfor
+  endif
+
+  assign ss_preset_qty = 1
+  if ss_preset != blank
+    assign ss_preset_qty = ss_preset.settings.qty
+  endif
+
+  assign ss_preset_sticky_title = ss_product.title
+  assign ss_preset_net = ss_unit
+  assign ss_preset_gross = ss_unit
+  if ss_preset != blank
+    assign ss_preset_sticky_title = ss_preset.settings.title
+    if ss_preset.settings.sticky_label != blank
+      assign ss_preset_sticky_title = ss_preset_sticky_title | append: ' · ' | append: ss_preset.settings.sticky_label
+    endif
+    assign ss_preset_gross = ss_unit | times: ss_preset_qty
+    assign ss_preset_halves = ss_preset_qty | divided_by: 2
+    assign ss_preset_saving = 0
+    if ss_preset.settings.discount == 'second_half'
+      assign ss_preset_saving = ss_unit | times: 0.5 | times: ss_preset_halves
+    elsif ss_preset.settings.discount == 'buy2get1'
+      assign ss_preset_saving = ss_unit | times: ss_preset_halves
+    endif
+    assign ss_preset_net = ss_preset_gross | minus: ss_preset_saving | round
+  endif
+
+  assign ss_form_id = 'SSProductForm-' | append: section.id
+  assign ss_cta_prefix = section.settings.cta_prefix
+  assign ss_preset_cta_price = ss_preset_net | money
+  assign ss_preset_cta_label = ss_cta_prefix | append: ' · ' | append: ss_preset_cta_price
+-%}
+
+<div class="ss-pdp ss-hero" data-ss-pdp>
+  <nav class="ss-cart-nav" aria-label="Acceso al carrito">
+    <a href="{{ routes.cart_url }}" class="ss-cart-nav-link" aria-label="Ver carrito, {{ cart.item_count }} artículos">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6H19a2 2 0 0 0 2-1.6L22 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="19" cy="20" r="1"/></svg>
+      <span class="ss-cart-nav-count" data-ss-cart-count>{{ cart.item_count }}</span>
+    </a>
+  </nav>
+  {%- if section.settings.show_announcement -%}
+    <div class="ss-announce">
+      <span class="ss-dot"></span>
+      {{- section.settings.announcement_before -}}
+      <strong>{{ section.settings.announcement_highlight }}</strong>
+      {{- section.settings.announcement_after -}}
+    </div>
+  {%- endif -%}
+
+  <div class="ss-buybox" id="buybox">
+    <div class="ss-wrap">
+      <div class="ss-buybox-grid">
+        {%- comment -%} ---------- Galería ---------- {%- endcomment -%}
+        <div class="ss-gallery">
+          <div class="ss-gallery-main">
+            {%- if section.settings.gallery_badge != blank -%}
+              <span class="ss-gallery-badge">{{ section.settings.gallery_badge }}</span>
+            {%- endif -%}
+
+            {%- assign ss_first = blank -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'gallery_image' and ss_first == blank -%}
+                {%- assign ss_first = block -%}
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if ss_first != blank -%}
+              <img
+                data-ss-gallery-main
+                src="{% if ss_first.settings.image != blank %}{{ ss_first.settings.image | image_url: width: 1200 }}{% else %}{{ ss_gallery_fallback[0] | asset_url }}{% endif %}"
+                alt="{{ ss_first.settings.alt | default: ss_product.title | escape }}"
+                width="1200"
+                height="1200"
+                fetchpriority="high"
+              >
+            {%- endif -%}
+          </div>
+
+          <div class="ss-gallery-thumbs" role="tablist" aria-label="Galería del producto">
+            {%- assign ss_index = 0 -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type != 'gallery_image' -%}{%- continue -%}{%- endif -%}
+              {%- assign ss_fallback = ss_gallery_fallback[ss_index] | default: ss_gallery_fallback[0] -%}
+              {%- assign ss_full = block.settings.image | image_url: width: 1200 -%}
+              {%- if block.settings.image == blank -%}
+                {%- assign ss_full = ss_fallback | asset_url -%}
+                {%- assign ss_srcset = ss_fallback | asset_img_url: '400x' | append: ' 400w, ' | append: ss_fallback | asset_img_url: '800x' | append: ' 800w' -%}
+                {%- assign ss_thumb_src = ss_fallback | asset_img_url: '200x' -%}
+              {%- else -%}
+                {%- assign ss_srcset = block.settings.image | image_url: width: 400 | append: ' 400w, ' | append: block.settings.image | image_url: width: 800 | append: ' 800w' -%}
+                {%- assign ss_thumb_src = block.settings.image | image_url: width: 200 -%}
+              {%- endif -%}
+              <button
+                type="button"
+                class="ss-thumb{% if ss_index == 0 %} ss-active{% endif %}"
+                role="tab"
+                aria-selected="{% if ss_index == 0 %}true{% else %}false{% endif %}"
+                aria-label="{{ block.settings.alt | default: ss_product.title | escape }}"
+                data-ss-thumb="{{ ss_full }}"
+                data-ss-srcset="{{ ss_srcset }}"
+                {{ block.shopify_attributes }}
+              >
+                <img src="{{ ss_thumb_src }}" alt="{{ block.settings.alt | default: ss_product.title | escape }}" loading="lazy" width="200" height="200">
+              </button>
+              {%- assign ss_index = ss_index | plus: 1 -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- comment -%} ---------- Detalles ---------- {%- endcomment -%}
+        <div class="ss-details">
+          <div class="ss-micro-proof">
+            <span class="ss-stars">{{ section.settings.rating_stars | default: '★★★★★' }}</span>
+            <span>
+              <b>{{ section.settings.rating_score }}</b> · {{ section.settings.rating_text }}
+            </span>
+          </div>
+
+          <h1 class="ss-product-title">{{ section.settings.title | default: ss_product.title }}</h1>
+          {%- if section.settings.subtitle != blank -%}
+            <p class="ss-product-sub">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+
+          <ul class="ss-benefits">
+            {%- for block in section.blocks -%}
+              {%- if block.type != 'benefit' -%}{%- continue -%}{%- endif -%}
+              <li {{ block.shopify_attributes }}>
+                {% render 'ss-icon', name: block.settings.icon, size: 20, stroke: 1.8, color: '#6D303F' %}
+                <span>
+                  <b>{{ block.settings.strong }}</b>
+                  {% if block.settings.text != blank %} · {{ block.settings.text }}{% endif %}
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+
+          <p class="ss-offer-label">{{ section.settings.offer_label }}</p>
+
+          <div class="ss-bundles" role="radiogroup" aria-label="{{ section.settings.offer_label | escape }}">
+            {%- for block in section.blocks -%}
+              {%- if block.type != 'bundle' -%}{%- continue -%}{%- endif -%}
+              {%- liquid
+                assign ss_qty = block.settings.qty
+                assign ss_gross = ss_unit | times: ss_qty
+                assign ss_halves = ss_qty | divided_by: 2
+                assign ss_saving = 0
+                if block.settings.discount == 'second_half'
+                  assign ss_saving = ss_unit | times: 0.5 | times: ss_halves
+                elsif block.settings.discount == 'buy2get1'
+                  assign ss_saving = ss_unit | times: ss_halves
+                endif
+                assign ss_net = ss_gross | minus: ss_saving | round
+                assign ss_per_unit = ss_net | times: 1.0 | divided_by: ss_qty
+                assign ss_per_unit = ss_per_unit | round
+                assign ss_cta_price = ss_net | money
+                assign ss_sticky_title = block.settings.title
+                if block.settings.sticky_label != blank
+                  assign ss_sticky_title = ss_sticky_title | append: ' · ' | append: block.settings.sticky_label
+                endif
+                assign ss_cta_value = ss_cta_prefix | append: ' · ' | append: ss_cta_price
+              -%}
+              <button
+                type="button"
+                class="ss-bundle{% if block.settings.preselect %} ss-active{% endif %}{% if block.settings.badge %} ss-has-badge{% endif %}"
+                role="radio"
+                aria-checked="{% if block.settings.preselect %}true{% else %}false{% endif %}"
+                tabindex="{% if block.settings.preselect %}0{% else %}-1{% endif %}"
+                data-ss-bundle
+                data-ss-qty="{{ ss_qty }}"
+                data-ss-price="{{ ss_net | money }}"
+                data-ss-compare="{% if ss_net < ss_gross %}{{ ss_gross | money }}{% endif %}"
+                data-ss-title="{{ ss_sticky_title | escape }}"
+                data-ss-cta="{{ ss_cta_value | escape }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.badge -%}
+                  <span class="ss-popular-pill">{{ block.settings.badge_text }}</span>
+                {%- endif -%}
+
+                <span class="ss-bundle-top">
+                  <span class="ss-radio"></span>
+                  <span class="ss-bundle-info">
+                    <span class="ss-bundle-title">{{ block.settings.title }}</span>
+                    {%- if block.settings.subtitle != blank -%}
+                      <span class="ss-bundle-sub">{{ block.settings.subtitle }}</span>
+                    {%- endif -%}
+                  </span>
+                  <span class="ss-bundle-price">
+                    <span class="ss-price-now">{{ ss_net | money }}</span>
+                    {%- if ss_net < ss_gross -%}
+                      <span class="ss-price-was">{{ ss_gross | money }}</span>
+                    {%- endif -%}
+                    <span class="ss-per-unit">{{ ss_per_unit | money }} {{ section.settings.per_unit_suffix }}</span>
+                  </span>
+                </span>
+
+                {%- if block.settings.ribbon_style == 'none' -%}
+                  <span class="ss-bundle-ribbon ss-ghost" aria-hidden="true">&nbsp;</span>
+                {%- else -%}
+                  <span class="ss-bundle-ribbon{% if block.settings.ribbon_style == 'soft' %} ss-soft{% endif %}">
+                    {%- if block.settings.ribbon_icon != 'none' -%}
+                      {% render 'ss-icon', name: block.settings.ribbon_icon, size: 15, stroke: 2 %}
+                    {%- endif -%}
+                    {{ block.settings.ribbon_text }}
+                  </span>
+                {%- endif -%}
+              </button>
+            {%- endfor -%}
+          </div>
+
+          {%- comment -%} ---------- Formulario de producto (nativo) ---------- {%- endcomment -%}
+          {%- if ss_product != blank and ss_variant != blank -%}
+            {%- liquid
+              assign ss_can_add = ss_variant.available
+              assign ss_add_text = ss_preset_cta_label
+              if ss_can_add == false
+                assign ss_add_text = section.settings.cta_sold_out
+              endif
+              assign ss_variant_media = ss_variant.featured_media.preview_image | image_url: width: 100
+              if ss_variant.featured_media.preview_image == blank
+                assign ss_variant_media = ss_product.featured_media.preview_image | image_url: width: 100
+              endif
+            -%}
+            <product-form-component
+              data-section-id="{{ section.id }}"
+              data-product-id="{{ ss_product.id }}"
+              data-product-url="{{ ss_product.url }}"
+              data-quantity-default="{{ ss_preset_qty }}"
+              data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+              on:submit="/handleSubmit"
+            >
+              <div class="ss-visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+
+              {%- form 'product', ss_product, id: ss_form_id, data-ss-product-form: 'true', class: 'ss-form' -%}
+                <input type="hidden" name="id" ref="variantId" value="{{ ss_variant.id }}">
+                <input type="hidden" name="quantity" value="{{ ss_preset_qty }}">
+
+                <add-to-cart-component
+                  ref="addToCartButtonContainer"
+                  data-product-variant-media="{{ ss_variant_media }}"
+                  data-add-to-cart-animation="{{ settings.add_to_cart_animation }}"
+                >
+                  <button
+                    type="submit"
+                    name="add"
+                    ref="addToCartButton"
+                    class="ss-cta"
+                    on:click="/handleClick"
+                    {% unless ss_can_add %}disabled{% endunless %}
+                    data-ss-main-cta
+                  >
+                    {% render 'ss-icon', name: 'bag', size: 19, stroke: 2 %}
+                    <span data-ss-cta-label>{{ ss_add_text }}</span>
+                  </button>
+                </add-to-cart-component>
+
+                {%- if section.settings.show_express_checkout -%}
+                  <div class="ss-express">{{ form | payment_button }}</div>
+                {%- endif -%}
+              {%- endform -%}
+            </product-form-component>
+          {%- endif -%}
+
+          {%- if section.settings.reassure != blank -%}
+            <p class="ss-reassure">
+              {% render 'ss-icon', name: 'lock', size: 14, stroke: 2, color: '#6D303F' %}
+              {{ section.settings.reassure }}
+            </p>
+          {%- endif -%}
+
+          {%- comment -%} ---------- Mini reseñas ---------- {%- endcomment -%}
+          {%- assign ss_has_reviews = false -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'mini_review' -%}{%- assign ss_has_reviews = true -%}{%- break -%}{%- endif -%}
+          {%- endfor -%}
+          {%- if ss_has_reviews -%}
+            <div class="ss-mini-reviews">
+              <div class="ss-mini-track" data-ss-mini-track>
+                {%- for block in section.blocks -%}
+                  {%- if block.type != 'mini_review' -%}{%- continue -%}{%- endif -%}
+                  <article class="ss-mini-card" {{ block.shopify_attributes }}>
+                    <span class="ss-stars">★★★★★</span>
+                    <p>{{ block.settings.text }}</p>
+                    <div class="ss-mini-author">
+                      {{ block.settings.author }}
+                      {%- if block.settings.verified %} <span class="ss-verified">✓ {{ block.settings.verified_text }}</span>{% endif -%}
+                    </div>
+                  </article>
+                {%- endfor -%}
+              </div>
+              <div class="ss-mini-dots">
+                {%- assign ss_dot_index = 0 -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type != 'mini_review' -%}{%- continue -%}{%- endif -%}
+                  <span class="{% if ss_dot_index == 0 %}ss-on{% endif %}" data-ss-mini-dot></span>
+                  {%- assign ss_dot_index = ss_dot_index | plus: 1 -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} ---------- Acordeones ---------- {%- endcomment -%}
+          <div class="ss-accordions">
+            {%- for block in section.blocks -%}
+              {%- if block.type != 'accordion' -%}{%- continue -%}{%- endif -%}
+              <div class="ss-acc" data-ss-acc {{ block.shopify_attributes }}>
+                <button type="button" class="ss-acc-btn" data-ss-acc-btn aria-expanded="false">
+                  {% render 'ss-icon', name: block.settings.icon, size: 18, stroke: 1.8, color: '#6D303F' %}
+                  {{ block.settings.title }}
+                  {% render 'ss-icon', name: 'chevron', size: 16, stroke: 2.2, class: 'ss-chev' %}
+                </button>
+                <div class="ss-acc-body" data-ss-acc-body>
+                  <div class="ss-acc-body-inner">{{ block.settings.content }}</div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+        </div>
+      </div>
+
+      <div data-ss-sticky-sentinel aria-hidden="true"></div>
+    </div>
+  </div>
+
+  {%- comment -%} ---------- Sticky ATC ---------- {%- endcomment -%}
+  <div class="ss-sticky-atc" data-ss-sticky>
+    <div class="ss-sticky-inner">
+      <div class="ss-sticky-thumb">
+        {% render 'ss-image', image: ss_product.featured_media.preview_image, asset: 'pdp-ss-hero-pack.jpg', alt: ss_product.title, sizes: '46px', loading: 'lazy' %}
+      </div>
+      <div class="ss-sticky-info">
+        <b data-ss-sticky-title>{{ ss_preset_sticky_title | default: ss_product.title }}</b>
+        <span>
+          <span data-ss-sticky-now>
+            {{- ss_preset_net | money -}}
+          </span>
+          <s data-ss-sticky-was {% if ss_preset_net >= ss_preset_gross %}hidden{% endif %}>{{ ss_preset_gross | money }}</s>
+        </span>
+      </div>
+      <button type="button" class="ss-sticky-cta" data-ss-sticky-cta>
+        {% render 'ss-icon', name: 'bag', size: 16, stroke: 2 %}
+        {{ section.settings.sticky_cta }}
+      </button>
+    </div>
+  </div>
+
+  <div class="ss-toast" data-ss-toast>
+    {% render 'ss-icon', name: 'check', size: 16, stroke: 2.4 %}
+    <span data-ss-toast-text></span>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · Buy box",
+  "tag": "section",
+  "class": "ss-section-hero",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto"
+    },
+    {
+      "type": "header",
+      "content": "Barra de anuncio"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Mostrar barra de anuncio",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_before",
+      "label": "Texto antes del destacado",
+      "default": "OFERTA ACTIVA · "
+    },
+    {
+      "type": "text",
+      "id": "announcement_highlight",
+      "label": "Texto destacado",
+      "default": "Compra 1 y llévate el 2.º al 50% DTO."
+    },
+    {
+      "type": "text",
+      "id": "announcement_after",
+      "label": "Texto después del destacado",
+      "default": " + Envío GRATIS en 2+ packs"
+    },
+    {
+      "type": "header",
+      "content": "Galería"
+    },
+    {
+      "type": "text",
+      "id": "gallery_badge",
+      "label": "Etiqueta sobre la imagen",
+      "default": "2.º pack al 50% DTO."
+    },
+    {
+      "type": "header",
+      "content": "Ficha del producto"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Pegatinas Detectoras para Bebidas"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Parecen nail art. Detectan GHB y ketamina en tu copa en solo 10 segundos."
+    },
+    {
+      "type": "text",
+      "id": "rating_stars",
+      "label": "Estrellas",
+      "default": "★★★★★"
+    },
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Nota",
+      "default": "4,9/5"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Texto de la nota",
+      "default": "Elegido por más de 1.300 chicas"
+    },
+    {
+      "type": "header",
+      "content": "Packs y compra"
+    },
+    {
+      "type": "text",
+      "id": "offer_label",
+      "label": "Etiqueta de la oferta",
+      "default": "Elige tu pack · 2.ª unidad al 50% DTO."
+    },
+    {
+      "type": "text",
+      "id": "per_unit_suffix",
+      "label": "Sufijo de precio por pack",
+      "default": "/ pack"
+    },
+    {
+      "type": "text",
+      "id": "cta_prefix",
+      "label": "Texto del botón de compra",
+      "default": "Añadir al carrito"
+    },
+    {
+      "type": "text",
+      "id": "cta_sold_out",
+      "label": "Texto si está agotado",
+      "default": "Agotado"
+    },
+    {
+      "type": "text",
+      "id": "reassure",
+      "label": "Texto de confianza",
+      "default": "Pago 100% seguro · Envío con seguimiento a toda España · Garantía de 14 días"
+    },
+    {
+      "type": "text",
+      "id": "sticky_cta",
+      "label": "Texto del botón sticky",
+      "default": "Añadir al carrito"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_express_checkout",
+      "label": "Mostrar pago exprés (Apple Pay / Google Pay)",
+      "info": "Desactivado por defecto para mantener el diseño de la maqueta aprobada.",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "gallery_image",
+      "name": "Imagen de galería",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen",
+          "info": "Si la dejas vacía se usa la imagen incluida en el tema."
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Texto alternativo"
+        }
+      ]
+    },
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "info", "label": "Información" },
+            { "value": "clock", "label": "Reloj" },
+            { "value": "heart", "label": "Corazón" },
+            { "value": "bag", "label": "Bolso" },
+            { "value": "shield-check", "label": "Escudo" },
+            { "value": "flask", "label": "Probeta" },
+            { "value": "star", "label": "Estrella" }
+          ],
+          "default": "heart"
+        },
+        {
+          "type": "text",
+          "id": "strong",
+          "label": "Texto en negrita",
+          "default": "Detecta GHB y ketamina"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto secundario",
+          "default": "Comprobación rápida y discreta"
+        }
+      ]
+    },
+    {
+      "type": "bundle",
+      "name": "Pack",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "1 Pack · 10 pegatinas"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo",
+          "default": "Para tus próximas salidas"
+        },
+        {
+          "type": "text",
+          "id": "sticky_label",
+          "label": "Unidades (para el botón sticky)",
+          "default": "10 pegatinas"
+        },
+        {
+          "type": "range",
+          "id": "qty",
+          "label": "Unidades (cantidad real)",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "select",
+          "id": "discount",
+          "label": "Descuento aplicado",
+          "info": "Debe coincidir con un descuento automático creado en Shopify.",
+          "options": [
+            { "value": "none", "label": "Sin descuento" },
+            { "value": "second_half", "label": "2.ª unidad al 50% DTO." },
+            { "value": "buy2get1", "label": "Compra 2 y llévate 1 gratis" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "checkbox",
+          "id": "preselect",
+          "label": "Seleccionado por defecto",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "badge",
+          "label": "Mostrar etiqueta superior",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Texto de la etiqueta",
+          "default": "MÁS POPULAR"
+        },
+        {
+          "type": "select",
+          "id": "ribbon_style",
+          "label": "Franja inferior",
+          "options": [
+            { "value": "none", "label": "Sin franja (espaciador)" },
+            { "value": "brand", "label": "Color marca" },
+            { "value": "soft", "label": "Rosa suave" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "select",
+          "id": "ribbon_icon",
+          "label": "Icono de la franja",
+          "options": [
+            { "value": "none", "label": "Sin icono" },
+            { "value": "truck", "label": "Camión" },
+            { "value": "star", "label": "Estrella" },
+            { "value": "gift", "label": "Regalo" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "ribbon_text",
+          "label": "Texto de la franja"
+        }
+      ]
+    },
+    {
+      "type": "mini_review",
+      "name": "Mini reseña",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Reseña"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Autora"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Mostrar compra verificada",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "verified_text",
+          "label": "Texto de compra verificada",
+          "default": "Compra verificada"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Acordeón",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            { "value": "shield-check", "label": "Escudo" },
+            { "value": "box", "label": "Caja" },
+            { "value": "flask", "label": "Probeta" },
+            { "value": "tote", "label": "Bolso" },
+            { "value": "truck", "label": "Camión" },
+            { "value": "clock", "label": "Reloj" }
+          ],
+          "default": "shield-check"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Garantía de reembolso de 14 días"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Contenido"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SS · Buy box"
+    }
+  ]
+}
+{% endschema %}

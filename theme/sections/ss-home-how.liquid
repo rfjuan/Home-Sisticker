@@ -1,0 +1,168 @@
+{%- comment -%} SS · Home — Cómo funciona (3 pasos) {%- endcomment -%}
+
+<div class="ss-pdp ss-home ss-h-how" id="como-funciona">
+  <div class="ss-wrap">
+    <div class="ss-h-head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="ss-h-kicker">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2 class="ss-h-title">
+        {{ section.settings.title }}
+        {%- if section.settings.title_accent != blank %}
+          <span class="ss-serif">{{ section.settings.title_accent }}</span>
+        {%- endif -%}
+      </h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p>{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ss-h-how__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'step' -%}{%- continue -%}{%- endif -%}
+        {%- liquid
+          assign ss_asset = 'pdp-ss-sheet-macro.jpg'
+          case block.settings.fallback
+            when 'before'
+              assign ss_asset = 'pdp-ss-before-nail.jpg'
+            when 'after'
+              assign ss_asset = 'pdp-ss-after-nail.jpg'
+            when 'lifestyle'
+              assign ss_asset = 'pdp-ss-lifestyle.jpg'
+            when 'ugc'
+              assign ss_asset = 'pdp-ss-ugc-2.jpg'
+          endcase
+        -%}
+        <article class="ss-h-how__card" {{ block.shopify_attributes }}>
+          <div class="ss-h-how__media">
+            {% render 'ss-image',
+              image: block.settings.image,
+              asset: ss_asset,
+              alt: block.settings.alt,
+              sizes: '(min-width: 750px) 33vw, 100vw',
+              loading: 'lazy',
+              width: 800,
+              height: 600
+            %}
+            <span class="ss-h-how__num" aria-hidden="true">
+              {{ forloop.index | prepend: '0' }}
+            </span>
+          </div>
+          <div class="ss-h-how__body">
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+            {%- if block.settings.tip != blank -%}
+              <p class="ss-h-how__tip">
+                {% render 'ss-icon', name: 'info', size: 13, stroke: 2 %}
+                {{ block.settings.tip }}
+              </p>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.note != blank -%}
+      <div class="ss-h-how__note">
+        {% render 'ss-icon', name: 'shield', size: 18, stroke: 1.8 %}
+        <p>{{ section.settings.note }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Inicio · Cómo funciona",
+  "tag": "section",
+  "class": "ss-home-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "Cómo se usa"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Tres pasos,"
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Parte destacada en cursiva",
+      "default": "unos segundos."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Descripción",
+      "default": "Las instrucciones que vienen en cada sobre son la referencia para una lectura correcta. Este es el proceso, en resumen."
+    },
+    {
+      "type": "richtext",
+      "id": "note",
+      "label": "Nota informativa",
+      "default": "<p><b>Una pegatina por comprobación.</b> Evita mojarla antes de usarla y sigue siempre las instrucciones del envase para interpretar el color. Ninguna comprobación rápida descarta al 100 % la presencia de sustancias.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "select",
+          "id": "fallback",
+          "label": "Imagen de reserva",
+          "options": [
+            { "value": "sheet", "label": "Lámina de pegatinas" },
+            { "value": "before", "label": "Uña con pegatina blanca" },
+            { "value": "after", "label": "Uña con pegatina azul" },
+            { "value": "ugc", "label": "Despegando una pegatina" },
+            { "value": "lifestyle", "label": "Salida nocturna" }
+          ],
+          "default": "sheet"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Texto alternativo",
+          "default": "Pegatina detectora sobre una uña"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Coloca la pegatina"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Descripción",
+          "default": "Pega una pegatina limpia y seca en tu uña antes de salir."
+        },
+        {
+          "type": "text",
+          "id": "tip",
+          "label": "Consejo (opcional)",
+          "default": ""
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inicio · Cómo funciona"
+    }
+  ]
+}
+{% endschema %}

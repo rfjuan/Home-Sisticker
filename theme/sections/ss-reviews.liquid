@@ -1,0 +1,136 @@
+{%- comment -%} SS · PDP — Muro de reseñas {%- endcomment -%}
+
+{%- liquid
+  assign ss_letters = section.settings.avatar_letters | split: ','
+  assign ss_colors = '#AF636F,#6D303F,#D8B3BA,#2A314B,#EDACB4' | split: ','
+  assign ss_fallbacks = 'pdp-ss-rev-nails.jpg,pdp-ss-rev-bag.jpg' | split: ','
+-%}
+
+<div class="ss-pdp ss-reviews" id="reviews">
+  <div class="ss-wrap">
+    <div class="ss-reviews-head">
+      <span class="ss-stars">{{ section.settings.stars }}</span>
+      <p class="ss-score">{{ section.settings.score }} <span>· {{ section.settings.score_note }}</span></p>
+    </div>
+
+    <div class="ss-summary-box">
+      <h3>{{ section.settings.summary_title }}</h3>
+      <p>{{ section.settings.summary_text }}</p>
+      <div class="ss-summary-avatars">
+        <div class="ss-avatar-stack">
+          {%- for letter in ss_letters limit: 5 -%}
+            <span style="background:{{ ss_colors[forloop.index0] }}{% if forloop.index0 == 2 or forloop.index0 == 4 %};color:#6D303F{% endif %}">{{ letter | strip }}</span>
+          {%- endfor -%}
+        </div>
+        <small>{{ section.settings.summary_count }}</small>
+      </div>
+    </div>
+
+    <div class="ss-review-grid">
+      {%- assign ss_photo_index = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'review' -%}{%- continue -%}{%- endif -%}
+        <article class="ss-review-card{% if block.settings.hidden_initial %} ss-review-hidden{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank or block.settings.fallback != 'none' -%}
+            <div class="ss-review-photo">
+              {%- assign ss_fallback_asset = blank -%}
+              {%- if block.settings.fallback == 'nails' -%}
+                {%- assign ss_fallback_asset = ss_fallbacks[0] -%}
+              {%- elsif block.settings.fallback == 'bag' -%}
+                {%- assign ss_fallback_asset = ss_fallbacks[1] -%}
+              {%- endif -%}
+              {% render 'ss-image',
+                image: block.settings.image,
+                asset: ss_fallback_asset,
+                alt: block.settings.author,
+                sizes: '(min-width: 750px) 300px, 50vw',
+                loading: 'lazy'
+              %}
+            </div>
+          {%- endif -%}
+          <span class="ss-stars">{{ section.settings.review_stars }}</span>
+          <p>{{ block.settings.text }}</p>
+          <div class="ss-review-meta">
+            <span class="ss-av" style="background:{{ block.settings.color | default: '#AF636F' }}">{{ block.settings.initials }}</span>
+            <span>
+              <b>{{ block.settings.author }}</b>
+              {%- if block.settings.verified -%}
+                <span class="ss-verified">{% render 'ss-icon', name: 'check', size: 11, stroke: 3 %}{{ section.settings.verified_text }}</span>
+              {%- endif -%}
+            </span>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    <button type="button" class="ss-more-btn" data-ss-reviews-more data-ss-more-message="{{ section.settings.more_message | escape }}">
+      {{ section.settings.more_label }}
+    </button>
+  </div>
+
+  <div class="ss-toast" data-ss-toast>
+    {% render 'ss-icon', name: 'check', size: 16, stroke: 2.4 %}
+    <span data-ss-toast-text></span>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · Reseñas",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "stars", "label": "Estrellas", "default": "★★★★★" },
+    { "type": "text", "id": "score", "label": "Nota", "default": "4,9 de 5" },
+    { "type": "text", "id": "score_note", "label": "Nota (aclaración)", "default": "Basado en reseñas verificadas" },
+    { "type": "header", "content": "Resumen" },
+    { "type": "text", "id": "summary_title", "label": "Título del resumen", "default": "Resumen de opiniones" },
+    { "type": "textarea", "id": "summary_text", "label": "Texto del resumen" },
+    { "type": "text", "id": "avatar_letters", "label": "Iniciales de los avatares", "default": "L,C,M,E,P" },
+    { "type": "text", "id": "summary_count", "label": "Texto de cantidad", "default": "+1.300 chicas ya las llevan en su bolso" },
+    { "type": "header", "content": "Reseñas" },
+    { "type": "text", "id": "review_stars", "label": "Estrellas por reseña", "default": "★★★★★" },
+    { "type": "text", "id": "verified_text", "label": "Texto de verificación", "default": "Compra verificada" },
+    { "type": "text", "id": "more_label", "label": "Botón ver más", "default": "Mostrar más opiniones" },
+    { "type": "text", "id": "more_message", "label": "Aviso al mostrar más", "default": "Mostrando todas las opiniones" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Reseña",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Reseña" },
+        { "type": "text", "id": "author", "label": "Autora" },
+        { "type": "text", "id": "initials", "label": "Iniciales" },
+        {
+          "type": "select",
+          "id": "color",
+          "label": "Color del avatar",
+          "options": [
+            { "value": "#AF636F", "label": "Rosa" },
+            { "value": "#6D303F", "label": "Burdeos" },
+            { "value": "#2A314B", "label": "Azul noche" },
+            { "value": "#D8B3BA", "label": "Rosa claro" }
+          ],
+          "default": "#AF636F"
+        },
+        { "type": "image_picker", "id": "image", "label": "Foto (opcional)" },
+        {
+          "type": "select",
+          "id": "fallback",
+          "label": "Foto incluida en el tema",
+          "info": "Se usa si no subes una foto.",
+          "options": [
+            { "value": "none", "label": "Sin foto" },
+            { "value": "nails", "label": "Uñas en discoteca" },
+            { "value": "bag", "label": "Sobre en el bolso" }
+          ],
+          "default": "none"
+        },
+        { "type": "checkbox", "id": "verified", "label": "Compra verificada", "default": true },
+        { "type": "checkbox", "id": "hidden_initial", "label": "Oculta hasta pulsar «Mostrar más»", "default": false }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SS · Reseñas" }]
+}
+{% endschema %}

@@ -1,0 +1,281 @@
+{%- comment -%}
+  SS · Home — Producto destacado
+  Precio y enlace salen del producto real. Los packs se muestran como
+  información; el precio final y los descuentos se aplican en la PDP y el carrito.
+{%- endcomment -%}
+
+{%- liquid
+  assign ss_product = section.settings.product
+  if ss_product == blank
+    assign ss_product = all_products['drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10']
+  endif
+  if ss_product != blank
+    assign ss_title = section.settings.title | default: ss_product.title
+    assign ss_price = ss_product.price
+  else
+    assign ss_title = section.settings.title
+    assign ss_price = blank
+  endif
+  assign ss_cta_url = section.settings.cta_link
+  if ss_cta_url == blank
+    assign ss_cta_url = ss_product.url | default: '/collections/all'
+  endif
+-%}
+
+<div class="ss-pdp ss-home ss-h-buy" id="comprar">
+  <div class="ss-wrap">
+    <div class="ss-h-buy__card">
+      <div class="ss-h-buy__media">
+        {%- if section.settings.badge != blank -%}
+          <span class="ss-h-buy__badge">{{ section.settings.badge }}</span>
+        {%- endif -%}
+        {%- assign ss_media_image = section.settings.image -%}
+        {%- if ss_media_image == blank and ss_product != blank -%}
+          {%- if ss_product.images.size > 1 -%}
+            {%- assign ss_media_image = ss_product.images[1] -%}
+          {%- else -%}
+            {%- assign ss_media_image = ss_product.featured_image -%}
+          {%- endif -%}
+        {%- endif -%}
+        {%- if ss_media_image != blank -%}
+          <img
+            src="{{ ss_media_image | image_url: width: 1200 }}"
+            srcset="
+              {{ ss_media_image | image_url: width: 480 }} 480w,
+              {{ ss_media_image | image_url: width: 720 }} 720w,
+              {{ ss_media_image | image_url: width: 1200 }} 1200w
+            "
+            sizes="(min-width: 990px) 45vw, 100vw"
+            alt="{{ ss_media_image.alt | default: ss_title | escape }}"
+            width="1200"
+            height="1200"
+            loading="lazy"
+          >
+        {%- else -%}
+          {% render 'ss-image',
+            image: section.settings.image,
+            asset: 'pdp-ss-sheet-macro.jpg',
+            alt: section.settings.image_alt,
+            sizes: '(min-width: 990px) 45vw, 100vw',
+            loading: 'lazy',
+            width: 1200,
+            height: 1200
+          %}
+        {%- endif -%}
+      </div>
+
+      <div class="ss-h-buy__body">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ss-h-kicker">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="ss-h-title">{{ ss_title }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ss-h-buy__sub">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+
+        {%- if ss_price != blank -%}
+          <p class="ss-h-buy__price">
+            <small>{{ section.settings.price_prefix }}</small>
+            <b>{{ ss_price | money }}</b>
+            <em>{{ section.settings.price_note }}</em>
+          </p>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="ss-h-buy__packs">
+            {%- for block in section.blocks -%}
+              {%- if block.type != 'pack' -%}{%- continue -%}{%- endif -%}
+              <div class="ss-h-pack{% if block.settings.highlight %} ss-h-pack--on{% endif %}" {{ block.shopify_attributes }}>
+                <div class="ss-h-pack__info">
+                  <b>{{ block.settings.title }}</b>
+                  <span>{{ block.settings.meta }}</span>
+                </div>
+                {%- if block.settings.tag != blank -%}
+                  <span class="ss-h-pack__tag">{{ block.settings.tag }}</span>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- capture ss_includes -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type != 'include' -%}{%- continue -%}{%- endif -%}
+            <li {{ block.shopify_attributes }}>
+              {% render 'ss-icon', name: 'check', size: 14, stroke: 2.8 %}
+              <span>{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- assign ss_includes = ss_includes | strip -%}
+        {%- if ss_includes != blank -%}
+          <ul class="ss-h-buy__includes">{{ ss_includes }}</ul>
+        {%- endif -%}
+
+        <div class="ss-h-buy__actions">
+          <a class="ss-h-btn ss-h-btn--wide" href="{{ ss_cta_url }}">
+            {{ section.settings.cta_label }}
+            {% render 'ss-icon', name: 'bag', size: 17, stroke: 2 %}
+          </a>
+          <div class="ss-h-buy__reassure">
+            {%- if section.settings.reassure_1 != blank -%}
+              <span>
+                {% render 'ss-icon', name: 'truck', size: 13, stroke: 2 %}
+                {{ section.settings.reassure_1 }}
+              </span>
+            {%- endif -%}
+            {%- if section.settings.reassure_2 != blank -%}
+              <span>
+                {% render 'ss-icon', name: 'refresh', size: 13, stroke: 2 %}
+                {{ section.settings.reassure_2 }}
+              </span>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Inicio · Producto",
+  "tag": "section",
+  "class": "ss-home-section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto",
+      "info": "El precio y el enlace se toman del producto. Si está vacío se usa el producto de pegatinas de la tienda."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "Elige tu pack"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título (si se deja vacío se usa el del producto)",
+      "default": "Pegatinas Detectoras para Bebidas"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Descripción",
+      "default": "Parecen pegatinas decorativas, pero su superficie reactiva cambia de color si entra en contacto con GHB o ketamina."
+    },
+    {
+      "type": "text",
+      "id": "price_prefix",
+      "label": "Prefijo del precio",
+      "default": "Desde"
+    },
+    {
+      "type": "text",
+      "id": "price_note",
+      "label": "Nota del precio",
+      "default": "· 10 pegatinas por pack"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del botón",
+      "default": "Elegir pack y comprar"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Enlace del botón",
+      "info": "Si se deja vacío se enlaza la página del producto."
+    },
+    {
+      "type": "text",
+      "id": "reassure_1",
+      "label": "Aviso 1",
+      "default": "Envío gratis en 2+ packs"
+    },
+    {
+      "type": "text",
+      "id": "reassure_2",
+      "label": "Aviso 2",
+      "default": "Devoluciones en 14 días"
+    },
+    {
+      "type": "header",
+      "content": "Imagen"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen del producto",
+      "info": "Si se deja vacía se usa la del producto o la incluida en el tema."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Texto alternativo",
+      "default": "Manos sosteniendo la lámina de diez pegatinas detectoras"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Etiqueta sobre la imagen",
+      "default": "2.º pack al 50 %"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pack",
+      "name": "Pack",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "1 pack"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Detalle",
+          "default": "10 pegatinas"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Etiqueta",
+          "default": ""
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Destacar",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "include",
+      "name": "Contenido del pedido",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "10 pegatinas por pack"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inicio · Producto"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,33 @@
+{%- comment -%} SS · PDP — Garantía {%- endcomment -%}
+
+<div class="ss-pdp ss-guarantee">
+  <div class="ss-wrap">
+    <div class="ss-guarantee-card">
+      <div class="ss-guarantee-seal">
+        {% render 'ss-icon', name: 'shield-check', size: 40, stroke: 1.7 %}
+      </div>
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.text }}</p>
+      {%- if section.settings.cta_label != blank -%}
+        <a class="ss-guarantee-cta" href="{{ section.settings.cta_link | default: '#buybox' }}">
+          {{ section.settings.cta_label }}
+          {% render 'ss-icon', name: 'arrow-down', size: 16, stroke: 2.2 %}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "SS · Garantía",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Compra con total confianza: 14 días de garantía" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Queremos que te sientas 100% cómoda con tu compra. Si al recibir tu pedido no es lo que esperabas, contáctanos dentro de los 14 días posteriores a la entrega y gestionaremos tu cambio o reembolso según nuestra política de devoluciones." },
+    { "type": "text", "id": "cta_label", "label": "Texto del botón", "default": "Aprovechar 2.º Pack al 50% DTO." },
+    { "type": "url", "id": "cta_link", "label": "Enlace del botón" }
+  ],
+  "presets": [{ "name": "SS · Garantía" }]
+}
+{% endschema %}

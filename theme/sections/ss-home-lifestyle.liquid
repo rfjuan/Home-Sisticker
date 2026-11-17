@@ -1,0 +1,113 @@
+{%- comment -%} SS · Home — Contexto emocional (imagen + mensaje) {%- endcomment -%}
+
+{%- liquid
+  assign ss_product = section.settings.product
+  if ss_product == blank
+    assign ss_product = all_products['drink-spike-test-nail-stickers-discreet-drink-test-strips-for-night-out-party-safety-heart-shape-nail-art-detection-stickers-10']
+  endif
+  assign ss_cta_url = section.settings.cta_link
+  if ss_cta_url == blank
+    assign ss_cta_url = ss_product.url | default: '/collections/all'
+  endif
+-%}
+
+<div class="ss-pdp ss-home ss-h-life">
+  <div class="ss-wrap">
+    <div class="ss-h-life__media">
+      {% render 'ss-image',
+        image: section.settings.image,
+        asset: 'pdp-ss-lifestyle.jpg',
+        alt: section.settings.alt,
+        sizes: '100vw',
+        loading: 'lazy',
+        width: 1600,
+        height: 900
+      %}
+      <div class="ss-h-life__card">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ss-h-kicker">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2 class="ss-h-title">
+          {{ section.settings.title }}
+          {%- if section.settings.title_accent != blank %}
+            <span class="ss-serif">{{ section.settings.title_accent }}</span>
+          {%- endif -%}
+        </h2>
+        {%- if section.settings.text != blank -%}
+          <p>{{ section.settings.text }}</p>
+        {%- endif -%}
+        {%- capture ss_life_link -%}
+          <a class="ss-h-link" href="{{ ss_cta_url }}">{{ section.settings.cta_label }}{% render 'ss-icon', name: 'bag', size: 14, stroke: 2 %}</a>
+        {%- endcapture -%}
+        {%- if section.settings.cta_label != blank -%}{{ ss_life_link }}{%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Inicio · Contexto",
+  "tag": "section",
+  "class": "ss-home-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen de ambiente"
+    },
+    {
+      "type": "text",
+      "id": "alt",
+      "label": "Texto alternativo",
+      "default": "Tres amigas riendo en una mesa de un bar con sus bebidas"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "Para tus noches"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Que la única preocupación sea"
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Parte destacada en cursiva",
+      "default": "volver con anécdotas."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto",
+      "default": "Cenas que se alargan, festivales, la barra a las tres de la mañana. Llevas la comprobación puesta y disponible en segundos, sin sacar nada raro del bolso."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del enlace",
+      "default": "Ver el producto"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Enlace",
+      "info": "Si se deja vacío se enlaza la página del producto."
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Producto del enlace"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Inicio · Contexto"
+    }
+  ]
+}
+{% endschema %}
