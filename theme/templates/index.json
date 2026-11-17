@@ -41,28 +41,28 @@
           "type": "item",
           "settings": {
             "icon": "truck",
-            "label": "Envío gratis en 2+ packs"
+            "label": "Envío a todo el mundo"
           }
         },
         "item_2": {
           "type": "item",
           "settings": {
-            "icon": "clock",
-            "label": "Preparación en 24–72 h"
+            "icon": "refresh",
+            "label": "Devolución sencilla"
           }
         },
         "item_3": {
           "type": "item",
           "settings": {
-            "icon": "refresh",
-            "label": "Devoluciones en 14 días"
+            "icon": "shield-check",
+            "label": "Garantía de 14 días"
           }
         },
         "item_4": {
           "type": "item",
           "settings": {
             "icon": "lock",
-            "label": "Pago seguro en Shopify"
+            "label": "Pago seguro y cifrado"
           }
         }
       },
@@ -402,7 +402,7 @@
           "type": "faq",
           "settings": {
             "question": "¿Cuánto tarda en llegar mi pedido?",
-            "answer": "<p>Preparamos los pedidos en 24–72 h laborables y enviamos solo a España. Cuando el paquete sale del almacén recibes un email con el seguimiento. El envío es gratis al elegir 2 packs o más.</p>"
+            "answer": "<p>Preparamos los pedidos en 24–72 h laborables y enviamos a todo el mundo. Cuando el paquete sale del almacén recibes un email con el seguimiento. El coste y el plazo de entrega dependen del destino y se calculan antes de pagar. El envío es gratis al elegir 2 packs o más.</p>"
           }
         },
         "faq_7": {
@@ -438,8 +438,8 @@
           "type": "card",
           "settings": {
             "icon": "truck",
-            "title": "Envío a toda España",
-            "text": "Preparamos tu pedido en 24–72 h laborables y te enviamos el seguimiento por email.",
+            "title": "Envío a todo el mundo",
+            "text": "Preparamos tu pedido en 24–72 h laborables y te enviamos el seguimiento por email. El plazo depende del destino.",
             "link_label": "Política de envío",
             "link_url": "/policies/shipping-policy"
           }
@@ -468,8 +468,8 @@
           "type": "card",
           "settings": {
             "icon": "lock",
-            "title": "Checkout de Shopify",
-            "text": "El pago se completa en el checkout seguro de Shopify, con los métodos disponibles al finalizar la compra."
+            "title": "Pago seguro y cifrado",
+            "text": "El pago se completa en un checkout cifrado, con los métodos disponibles al finalizar la compra."
           }
         }
       },

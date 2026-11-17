@@ -235,11 +235,9 @@ def render_sections() -> str:
 HEADER = """
 <header class="pv-header">
   <div class="pv-announce">
-    <span>Envío gratis en 2+ packs</span>
+    <span>Envío a todo el mundo</span>
     <span aria-hidden="true">·</span>
-    <span>Preparación en 24–72 h</span>
-    <span aria-hidden="true">·</span>
-    <span>Devoluciones en 14 días</span>
+    <span>Gratis en 2+ packs</span>
   </div>
   <div class="pv-header__bar">
     <nav class="pv-nav pv-nav--left" aria-label="Menú principal">

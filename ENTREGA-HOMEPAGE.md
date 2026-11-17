@@ -113,6 +113,8 @@ sections/footer-group.json   Copy del pie (titular y newsletter) en español.
 ## 3. Copy y responsabilidad
 
 - Tono en español de España, frases cortas, sin mayúsculas gritadas ni emojis.
+- Envío internacional: «envío a todo el mundo» en lugar de «solo a España», y
+  «pago seguro y cifrado» en lugar de «pago seguro con Shopify» / «100 % seguro».
 - **Sin reseñas inventadas en la homepage.** En lugar de un muro de testimonios
   se ha construido confianza verificable (envíos, devoluciones, soporte) y una
   FAQ completa.
@@ -178,12 +180,17 @@ sections/footer-group.json   Copy del pie (titular y newsletter) en español.
    plantilla en el index.
 4. **Oferta:** confirmar que el descuento “2.º pack al 50 %” y el envío gratis
    en 2+ packs siguen activos. La home enlaza a la PDP, donde ya se aplican.
-5. **Plazos:** la política de envío habla de 1 día laborable de preparación y
+5. **Envío internacional:** la web ya comunica «envío a todo el mundo» (barra
+   de anuncio, franja de confianza, tarjeta de envío y FAQ). Para que sea
+   cierto hay que activar las zonas y tarifas internacionales en Shopify y
+   actualizar `/policies/shipping-policy`, que hoy dice «enviamos solo a
+   España». Mientras no se cambie, web y política se contradicen.
+6. **Plazos:** la política de envío habla de 1 día laborable de preparación y
    la PDP de 24–72 h. La home mantiene 24–72 h; unifica el dato si procede.
-6. **Reseñas de la PDP:** las valoraciones y testimonios existentes no se han
+7. **Reseñas de la PDP:** las valoraciones y testimonios existentes no se han
    tocado ni se han replicado en la home. Conviene validar su origen antes de
    mantenerlos publicados.
-7. **Páginas legales:** aviso legal, cookies y condiciones deben existir y estar
+8. **Páginas legales:** aviso legal, cookies y condiciones deben existir y estar
    publicadas para que el pie las enlace automáticamente.
 
 ---
