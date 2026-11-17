@@ -36,6 +36,26 @@ Implementación real de la homepage sobre el tema exportado de la tienda
 Todas las secciones tienen `presets`, ajustes en español y bloques editables
 desde el editor visual (textos, iconos, imágenes, enlaces, orden de bloques).
 
+### Correspondencia con la arquitectura de 15 bloques del briefing
+
+| Bloque del briefing | Dónde está |
+|---|---|
+| 1. Barra de anuncio | Barra nativa del tema, con los colores de marca y la oferta real |
+| 2. Cabecera | Cabecera nativa de Horizon (logo, menú, buscador, cuenta, carrito) |
+| 3. Hero | `ss-home-hero` |
+| 4. Beneficios | `ss-home-benefits` |
+| 5. Cómo funciona (3 pasos) | `ss-home-how` |
+| 6. Resultados y límites | `ss-home-result` (comparador + límites) |
+| 7. Lifestyle / emocional | `ss-home-lifestyle` |
+| 8. Producto destacado + compra | `ss-home-product` (precio dinámico, packs, CTA) |
+| 9. Comparativa | `ss-compare` |
+| 10. Qué incluye el pedido | Bloques de `ss-home-product` |
+| 11. Prueba social | `ss-home-trust` + `ss-home-service` (datos verificables de la tienda) |
+| 12. Confianza | `ss-home-trust` y `ss-home-service` |
+| 13. FAQ en acordeón | `ss-faq` |
+| 14. CTA final | `ss-home-final` (+ barra fija móvil `ss-home-sticky`) |
+| 15. Pie | Pie nativo del tema, con copy y colores ajustados |
+
 ### Archivos nuevos
 
 ```
@@ -59,6 +79,7 @@ sections/ss-faq.liquid       Ajuste "Ancla de la sección" (por defecto "pregunt
 sections/ss-compare.liquid   Textos por defecto sin marca ajena.
 sections/ss-brand-footer.liquid  Marca por defecto del pie de la PDP.
 templates/product.ss-pdp.json    Sustituidas 3 menciones a "SippSister" por MiniRueda.
+sections/ss-home-redirect.liquid Eliminado: la portada ya no redirige a la PDP.
 sections/header-group.json   Barra de anuncio con la oferta real.
 sections/footer-group.json   Copy del pie (titular y newsletter) en español.
 ```
@@ -133,6 +154,7 @@ sections/footer-group.json   Copy del pie (titular y newsletter) en español.
 | Render de las 12 secciones con datos simulados | Correcto: 3 pasos, 2 columnas de comparativa, 4 tarjetas, 3 packs, 4 inclusiones, 8 FAQ, CTA final y barra móvil |
 | Enlaces y anclas | `#como-funciona`, `#resultado`, `#comprar`, `#preguntas`, producto y políticas |
 | Precio dinámico | Sí, desde `product.price` |
+| HTML generado | 0 errores de anidado (html5lib), sin `id` duplicados, un solo `h1` |
 | Vista previa | Servida y navegable (escritorio y móvil) |
 
 **No comprobado** (limitaciones reales del entorno):
