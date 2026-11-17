@@ -382,7 +382,7 @@ def build_page(section_html: str) -> str:
   <meta name="description" content="Pegatinas que parecen nail art y comprueban tu bebida: GHB y ketamina, resultado en unos 10 segundos. Envíos a España.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
   <link rel="stylesheet" href="assets/ss-pdp.css">
   <link rel="stylesheet" href="assets/ss-home.css">
   <style>{SHELL_CSS}</style>

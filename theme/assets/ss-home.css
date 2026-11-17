@@ -377,14 +377,15 @@
     align-items: center;
   }
   .ss-h-hero__list {
-    order: initial;
+    order: 3;
+    margin-top: 24px;
   }
   .ss-h-hero__actions {
-    order: initial;
+    order: 4;
     width: auto;
   }
   .ss-h-hero__note {
-    order: initial;
+    order: 5;
   }
   .ss-h-hero__media {
     order: initial;
@@ -628,7 +629,7 @@
 
 /* -------------------------------------------------------- 5. RESULTADO/LÍMITES */
 .ss-h-result {
-  background: var(--hm-bg);
+  background: var(--cream);
   padding-block: var(--hm-space);
 }
 .ss-h-result__grid {
@@ -1292,4 +1293,19 @@
    se arrastra en horizontal (evita bloquear el scroll en móvil). */
 .ss-h-result__slider .ss-slider {
   touch-action: pan-y;
+}
+
+.ss-h-how__note-text {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.ss-h-how__note-text p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+.ss-h-how__note-text b {
+  color: var(--burgundy);
 }

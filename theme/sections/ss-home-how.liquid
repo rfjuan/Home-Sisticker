@@ -65,7 +65,7 @@
     {%- if section.settings.note != blank -%}
       <div class="ss-h-how__note">
         {% render 'ss-icon', name: 'shield', size: 18, stroke: 1.8 %}
-        <p>{{ section.settings.note }}</p>
+        <div class="ss-h-how__note-text">{{ section.settings.note }}</div>
       </div>
     {%- endif -%}
   </div>

@@ -129,7 +129,7 @@ sections/footer-group.json   Copy del pie (titular y newsletter) en español.
 | Comprobación | Resultado |
 |---|---|
 | `shopify theme check` (CLI 3.86, local) | **0 incidencias nuevas** (158 preexistentes en archivos originales del tema) |
-| JSON de plantillas y esquemas | Válidos (526 archivos en el ZIP) |
+| JSON de plantillas y esquemas | Válidos (525 archivos en el ZIP) |
 | Render de las 12 secciones con datos simulados | Correcto: 3 pasos, 2 columnas de comparativa, 4 tarjetas, 3 packs, 4 inclusiones, 8 FAQ, CTA final y barra móvil |
 | Enlaces y anclas | `#como-funciona`, `#resultado`, `#comprar`, `#preguntas`, producto y políticas |
 | Precio dinámico | Sí, desde `product.price` |
